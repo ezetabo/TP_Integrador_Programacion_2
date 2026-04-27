@@ -4,10 +4,21 @@
  */
 package tpi.prog2.dao;
 
+import java.util.List;
+
 /**
  *
  * @author Administrator
  */
-public interface IBaseDAO {
-    
+public interface IBaseDAO<T> {
+
+    T crear(T entidad);
+
+    List<T> listar();
+
+    T buscarPorId(Long id);
+
+    void actualizar(T entidad);
+
+    void eliminarLogico(Long id);
 }

@@ -15,11 +15,9 @@ public abstract class Base {
         if (id != null && id < 1) {
             throw new IllegalArgumentException("ERROR!! El id debe ser mayor a 0.");
         }
-
         if (createdAt == null) {
             throw new IllegalArgumentException("ERROR!! La fecha de creación no puede ser nula.");
         }
-
         this.id = id;
         this.eliminado = eliminado;
         this.createdAt = createdAt;
