@@ -1,6 +1,7 @@
 package tpi.prog2.entities;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  *
@@ -126,14 +127,14 @@ public class Producto extends Base {
 
     @Override
     public boolean equals(Object obj) {
-        return (obj instanceof Producto other)
-                && getId() != null
-                && other.getId() != null
-                && getId().equals(other.getId());
+        return this == obj || 
+        (obj instanceof Producto other && 
+            this.id != null && 
+            this.id.equals(other.id));
     }
 
     @Override
     public int hashCode() {
-        return getId() != null ? getId().hashCode() : 0;
+        return Objects.hash(this.id);
     }
 }

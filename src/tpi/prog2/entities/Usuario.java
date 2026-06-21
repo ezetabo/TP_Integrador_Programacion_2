@@ -1,6 +1,8 @@
 package tpi.prog2.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import tpi.prog2.enums.Rol;
 
 /**
@@ -15,6 +17,7 @@ public class Usuario extends Base {
     private String celular;
     private String contrasena;
     private Rol rol;
+    private List<Pedido> pedidos;
 
     public Usuario(Long id, boolean eliminado, LocalDateTime createdAt,
             String nombre, String apellido, String mail,
@@ -27,6 +30,7 @@ public class Usuario extends Base {
         setCelular(celular);
         setContrasena(contrasena);
         setRol(rol);
+        this.pedidos = new ArrayList<>();
     }
 
     public Usuario(String nombre, String apellido, String mail,

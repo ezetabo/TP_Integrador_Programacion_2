@@ -1,15 +1,16 @@
 package tpi.prog2.entities;
 
 import java.time.LocalDateTime;
+
 /**
  *
  * @author Ezequiel Taboada
  */
 public abstract class Base {
 
-    private final Long id;
-    private boolean eliminado;
-    private final LocalDateTime createdAt;
+    protected final Long id;
+    protected boolean eliminado;
+    protected final LocalDateTime createdAt;
 
     protected Base(Long id, boolean eliminado, LocalDateTime createdAt) {
         if (id != null && id < 1) {
