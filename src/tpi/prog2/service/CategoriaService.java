@@ -1,85 +1,35 @@
 package tpi.prog2.service;
 
 import java.util.List;
-import tpi.prog2.dao.CategoriaDAO;
 import tpi.prog2.entities.Categoria;
-import tpi.prog2.exception.DAOException;
-import tpi.prog2.exception.EntityNotFoundException;
-import tpi.prog2.exception.ServiceException;
+import tpi.prog2.menu.InputReader;
 
-/**
- *
- * @author Ezequiel Taboada
- */
 public class CategoriaService {
 
-    private final CategoriaDAO categoriaDAO;
-
-    public CategoriaService() {
-        this.categoriaDAO = new CategoriaDAO();
-    }
-
-    public Categoria crear(String nombre, String descripcion) {
-        try {
-            Categoria categoria = new Categoria(nombre, descripcion);
-            return categoriaDAO.crear(categoria);
-        } catch (IllegalArgumentException e) {
-            throw new ServiceException(e.getMessage(), e);
-        } catch (DAOException e) {
-            throw new ServiceException("No se pudo crear la categoría.", e);
-        }
-    }
-
-    public List<Categoria> listar() {
-        try {
-            return categoriaDAO.listar();
-        } catch (DAOException e) {
-            throw new ServiceException("No se pudieron listar las categorías.", e);
-        }
-    }
-
-    public Categoria buscarPorId(Long id) {
-        try {
-            Categoria categoria = categoriaDAO.buscarPorId(id);
-
-            if (categoria == null) {
-                throw new EntityNotFoundException("No existe una categoría con ese id.");
+    public static Categoria crear(List<Categoria> lista) {
+        String nombre = null;
+        boolean existe = false;
+        do {
+            nombre = InputReader.leerCadena("Ingrese el nombre de la categoria: ");
+            existe = existeNombre(lista, nombre);
+            if(existe){
+                System.out.println("ERROR!!! El nombre ya existe.");
             }
-
-            return categoria;
-
-        } catch (DAOException e) {
-            throw new ServiceException("No se pudo buscar la categoría.", e);
-        }
+        } while (existe);
+        String descripcion = InputReader.leerCadena("Ingrese la descripcion de \"" + nombre + "\" :");       
+        return crear(nombre, descripcion);
     }
-
-    public void actualizar(Long id, String nombre, String descripcion) {
-        try {
-            Categoria existente = buscarPorId(id);
-
-            Categoria actualizada = new Categoria(
-                    existente.getId(),
-                    existente.isEliminado(),
-                    existente.getCreatedAt(),
-                    nombre,
-                    descripcion
-            );
-
-            categoriaDAO.actualizar(actualizada);
-
-        } catch (IllegalArgumentException e) {
-            throw new ServiceException(e.getMessage(), e);
-        } catch (DAOException e) {
-            throw new ServiceException("No se pudo actualizar la categoría.", e);
-        }
+    
+    public static Categoria crear(String nombre, String descripcion){
+        return new Categoria(nombre, descripcion);
     }
-
-    public void eliminarLogico(Long id) {
-        try {
-            buscarPorId(id);
-            categoriaDAO.eliminarLogico(id);
-        } catch (DAOException e) {
-            throw new ServiceException("No se pudo eliminar la categoría.", e);
+    
+    private static boolean existeNombre(List<Categoria> lista, String nombre) {
+        for (Categoria categoria : lista) {
+            if (categoria.getNombre().equalsIgnoreCase(nombre.trim())) {
+                return true;
+            }
         }
+        return false;
     }
 }

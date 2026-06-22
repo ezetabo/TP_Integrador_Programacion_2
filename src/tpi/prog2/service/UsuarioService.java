@@ -1,111 +1,41 @@
 package tpi.prog2.service;
 
 import java.util.List;
-import tpi.prog2.dao.UsuarioDAO;
 import tpi.prog2.entities.Usuario;
 import tpi.prog2.enums.Rol;
-import tpi.prog2.exception.DAOException;
-import tpi.prog2.exception.EntityNotFoundException;
-import tpi.prog2.exception.ServiceException;
+import tpi.prog2.menu.InputReader;
 
-/**
- *
- * @author Ezequiel Taboada
- */
 public class UsuarioService {
 
-    private final UsuarioDAO usuarioDAO;
-
-    public UsuarioService() {
-        this.usuarioDAO = new UsuarioDAO();
-    }
-
-    public Usuario crear(String nombre, String apellido, String mail,
-            String celular, String contrasena, Rol rol) {
-
-        try {
-            if (usuarioDAO.existeEmail(mail)) {
-                throw new ServiceException("El email ya está en uso.");
+    public static Usuario crear(List<Usuario> lista) {
+        String nombre = InputReader.leerCadena("Ingrese el nombre: ");
+        String apellido = InputReader.leerCadena("Ingrese el apellido: ");
+        String mail;
+        boolean existe = false;
+        String celular = InputReader.leerTelefono("Ingrese el numero de celular: ");
+        String contrasenia = InputReader.leerCadena("Ingrese la contraseña: ");
+        Rol rol = InputReader.leerRol();
+         do {
+            mail = InputReader.leerEmail("Ingrese el mail: ");
+            existe = existeMail(lista, mail);
+            if(existe){
+                System.out.println("ERROR!!! El mail ya existe.");
             }
-
-            Usuario usuario = new Usuario(
-                    nombre,
-                    apellido,
-                    mail,
-                    celular,
-                    contrasena,
-                    rol
-            );
-
-            return usuarioDAO.crear(usuario);
-
-        } catch (IllegalArgumentException e) {
-            throw new ServiceException(e.getMessage(), e);
-        } catch (DAOException e) {
-            throw new ServiceException("No se pudo crear el usuario.", e);
-        }
+        } while (existe);
+         return crear(nombre, apellido, mail, celular, contrasenia, rol);
     }
 
-    public List<Usuario> listar() {
-        try {
-            return usuarioDAO.listar();
-        } catch (DAOException e) {
-            throw new ServiceException("No se pudieron listar los usuarios.", e);
-        }
+    public static Usuario crear(String nombre, String apellido, String mail,
+            String celular, String contrasenia, Rol rol) {
+        return new Usuario(nombre, apellido, mail, celular, contrasenia, rol);
     }
 
-    public Usuario buscarPorId(Long id) {
-        try {
-            Usuario usuario = usuarioDAO.buscarPorId(id);
-
-            if (usuario == null) {
-                throw new EntityNotFoundException("No existe el usuario.");
+    private static boolean existeMail(List<Usuario> lista, String nombre) {
+        for (Usuario usuario : lista) {
+            if (usuario.getNombre().equalsIgnoreCase(nombre.trim())) {
+                return true;
             }
-
-            return usuario;
-
-        } catch (DAOException e) {
-            throw new ServiceException("No se pudo buscar el usuario.", e);
         }
-    }
-
-    public void actualizar(Long id, String nombre, String apellido, String mail,
-            String celular, String contrasena, Rol rol) {
-
-        try {
-            Usuario existente = buscarPorId(id);
-
-            if (usuarioDAO.existeEmailEnOtroUsuario(mail, existente.getId())) {
-                throw new ServiceException("El email ya está en uso por otro usuario.");
-            }
-
-            Usuario actualizado = new Usuario(
-                    existente.getId(),
-                    existente.isEliminado(),
-                    existente.getCreatedAt(),
-                    nombre,
-                    apellido,
-                    mail,
-                    celular,
-                    contrasena,
-                    rol
-            );
-
-            usuarioDAO.actualizar(actualizado);
-
-        } catch (IllegalArgumentException e) {
-            throw new ServiceException(e.getMessage(), e);
-        } catch (DAOException e) {
-            throw new ServiceException("No se pudo actualizar el usuario.", e);
-        }
-    }
-
-    public void eliminarLogico(Long id) {
-        try {
-            buscarPorId(id);
-            usuarioDAO.eliminarLogico(id);
-        } catch (DAOException e) {
-            throw new ServiceException("No se pudo eliminar el usuario.", e);
-        }
+        return false;
     }
 }

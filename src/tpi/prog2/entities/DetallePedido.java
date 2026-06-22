@@ -1,6 +1,7 @@
 package tpi.prog2.entities;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  *
@@ -12,60 +13,79 @@ public class DetallePedido extends Base {
     private Double subtotal;
     private Producto producto;
 
-    public DetallePedido(Long id, boolean eliminado, LocalDateTime createdAt,
-            int cantidad, Double subtotal, Producto producto) {
-
-        super(id, eliminado, createdAt);
-        setCantidad(cantidad);
-        setSubtotal(subtotal);
+    public DetallePedido(int cantidad, Producto producto) {
+        super();
         setProducto(producto);
-    }
-
-    public DetallePedido(int cantidad, Double subtotal, Producto producto) {
-        this(null, false, LocalDateTime.now(), cantidad, subtotal, producto);
+        setCantidad(cantidad);
+        setSubtotal(calcularSubtotal());
     }
 
     public int getCantidad() {
         return cantidad;
     }
 
+    public void setCantidad(int cantidad) {
+        if (cantidad <= 0) {
+            throw new IllegalArgumentException("ERROR!! La cantidad del detalle debe ser mayor a 0.");
+        }
+
+        this.cantidad = cantidad;
+        this.subtotal = calcularSubtotal();
+    }
+
     public Double getSubtotal() {
         return subtotal;
+    }
+
+    public void setSubtotal(Double subtotal) {
+        if (subtotal == null || subtotal < 0) {
+            throw new IllegalArgumentException("ERROR!! El subtotal del detalle debe ser mayor o igual a 0.");
+        }
+
+        this.subtotal = subtotal;
     }
 
     public Producto getProducto() {
         return producto;
     }
 
-    public void setCantidad(int cantidad) {
-        if (cantidad <= 0) {
-            throw new IllegalArgumentException("ERROR!! La cantidad debe ser mayor a 0.");
-        }
-        this.cantidad = cantidad;
-    }
-
-    public void setSubtotal(Double subtotal) {
-        if (subtotal == null || subtotal < 0) {
-            throw new IllegalArgumentException("ERROR!! El subtotal no puede ser negativo.");
-        }
-        this.subtotal = subtotal;
-    }
-
     public void setProducto(Producto producto) {
         if (producto == null) {
-            throw new IllegalArgumentException("ERROR!! El detalle debe tener un producto.");
+            throw new IllegalArgumentException("ERROR!! El producto no puede ser nulo.");
         }
-        this.producto = producto;
+        if (this.producto != producto) {
+            this.producto = producto;
+            this.subtotal = calcularSubtotal();
+        }
+
+    }
+
+    private Double calcularSubtotal() {
+        if (producto == null || producto.getPrecio() == null) {
+            return 0.0;
+        }
+        return subtotal;
     }
 
     @Override
     public String toString() {
+        
         return String.format(
                 "| ID: %-4s | Producto: %-25s | Cantidad: %-5d | Subtotal: $%10.2f |",
-                getId() == null ? "N/A" : getId(),
+                id,
                 producto.getNombre(),
                 cantidad,
                 subtotal
         );
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj || (obj instanceof DetallePedido other && this.getId().equals(other.getId()));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getId());
     }
 }

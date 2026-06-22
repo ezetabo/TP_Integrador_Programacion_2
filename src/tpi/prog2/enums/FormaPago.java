@@ -1,13 +1,9 @@
 package tpi.prog2.enums;
 
-/**
- *
- * @author Ezequiel Taboada
- */
 public enum FormaPago {
-    TARJETA("Pago con tarjeta"),
-    TRANSFERENCIA("Transferencia bancaria"),
-    EFECTIVO("Pago en efectivo");
+    TARJETA("Tarjeta"),
+    TRANSFERENCIA("Transferencia"),
+    EFECTIVO("Efectivo");
 
     private final String descripcion;
 

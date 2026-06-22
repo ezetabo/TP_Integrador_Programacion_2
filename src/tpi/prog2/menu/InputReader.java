@@ -1,22 +1,22 @@
 package tpi.prog2.menu;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import tpi.prog2.enums.Estado;
 import tpi.prog2.enums.FormaPago;
 import tpi.prog2.enums.Rol;
 
 /**
- * Clase utilitaria para la lectura y validación de datos desde consola. 
- * Centraliza la lógica de entrada para evitar duplicación de código.
+ * Clase utilitaria para la lectura y validación de datos desde consola. Centraliza la lógica de entrada para evitar duplicación de código.
  */
 public class InputReader {
 
     private static final Scanner sc = new Scanner(System.in);
 
     /**
-     * Solicita al usuario un número decimal (double) desde consola. 
-     * Permite ingresar valores utilizando coma o punto como separador decimal. 
-     * Reintenta hasta que el valor ingresado sea válido.
+     * Solicita al usuario un número decimal (double) desde consola. Permite ingresar valores utilizando coma o punto como separador decimal. Reintenta hasta que el valor ingresado sea válido.
      *
      * @param mensaje Mensaje que se muestra al usuario para solicitar el dato.
      * @param mensajeError Mensaje que se muestra en caso de error de formato.
@@ -41,8 +41,7 @@ public class InputReader {
     }
 
     /**
-     * Solicita al usuario un CUIT válido. El CUIT debe contener exactamente 11 dígitos numéricos sin guiones ni espacios. 
-     * Reintenta hasta que el valor ingresado cumpla con el formato requerido.
+     * Solicita al usuario un CUIT válido. El CUIT debe contener exactamente 11 dígitos numéricos sin guiones ni espacios. Reintenta hasta que el valor ingresado cumpla con el formato requerido.
      *
      * @return cadena con el CUIT válido ingresado por el usuario.
      */
@@ -64,18 +63,16 @@ public class InputReader {
     }
 
     /**
-     * Solicita al usuario un correo electrónico con validación básica. 
-     * El email debe contener el carácter '@' y no debe tener espacios. 
-     * Reintenta hasta que el formato sea válido.
+     * Solicita al usuario un correo electrónico con validación básica. El email debe contener el carácter '@' y no debe tener espacios. Reintenta hasta que el formato sea válido.
      *
      * @return cadena con el email válido ingresado por el usuario.
      */
-    public static String leerEmail() {
+    public static String leerEmail(String msj) {
         String email = "";
         boolean emailValido = false;
 
         do {
-            email = leerCadena("Ingrese su Email: ");
+            email = leerCadena(msj);
 
             if (email.contains("@") && !email.contains(" ")) {
                 emailValido = true;
@@ -84,23 +81,21 @@ public class InputReader {
             }
         } while (!emailValido);
 
-        return email;
+        return email.trim();
     }
 
     /**
-     * Solicita al usuario un número de teléfono en formato internacional argentino. 
-     * Formato requerido: +54 9 XXXXXXXXXX (ejemplo: +54 9 2611234567). 
-     * Reintenta hasta que el valor cumpla con el patrón definido.
+     * Solicita al usuario un número de teléfono en formato internacional argentino. Formato requerido: +54 9 XXXXXXXXXX (ejemplo: +54 9 2611234567). Reintenta hasta que el valor cumpla con el patrón definido.
      *
      * @return cadena con el teléfono válido ingresado por el usuario.
      */
-    public static String leerTelefono() {
+    public static String leerTelefono(String msj) {
         String telefono = "";
         String patron = "^\\+54 9 \\d{10}$";
 
         do {
-            System.out.println("Formato requerido: +54 9 2611234567 (ejemplo para Mendoza)");
-            telefono = leerCadena("Ingrese Teléfono: ");
+            System.out.println("Formato requerido: +54 9 1142223333 (ejemplo para Buenos Aires)");
+            telefono = leerCadena(msj);
 
             if (telefono.matches(patron)) {
                 break;
@@ -114,8 +109,7 @@ public class InputReader {
     }
 
     /**
-     * Solicita al usuario una cadena de texto no vacía. Elimina espacios en blanco al inicio y al final. 
-     * Reintenta hasta que el usuario ingrese un valor válido.
+     * Solicita al usuario una cadena de texto no vacía. Elimina espacios en blanco al inicio y al final. Reintenta hasta que el usuario ingrese un valor válido.
      *
      * @param mensaje Mensaje que se muestra al usuario para solicitar el dato.
      * @return cadena no vacía ingresada por el usuario.
@@ -165,8 +159,7 @@ public class InputReader {
     }
 
     /**
-     * Solicita al usuario un número entero (int) denrto de un rango desde consola. 
-     * Reintenta hasta que el valor ingresado sea un entero válido.
+     * Solicita al usuario un número entero (int) denrto de un rango desde consola. Reintenta hasta que el valor ingresado sea un entero válido.
      *
      * @param mensaje Mensaje que se muestra al usuario para solicitar el dato.
      * @param mensajeError Mensaje que se muestra en caso de error de formato.
@@ -195,10 +188,29 @@ public class InputReader {
         return numero;
     }
 
+    public static LocalDate leerFecha(String mensaje) {
+        LocalDate fecha = null;
+        boolean datoValido = false;
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        do {
+            try {
+                String textoIngresado = leerCadena(mensaje);
+                fecha = LocalDate.parse(textoIngresado, formatter);
+                datoValido = true;
+
+            } catch (DateTimeParseException e) {
+                System.out.println("Ingrese una fecha válida con formato dd/MM/yyyy.");
+            }
+
+        } while (!datoValido);
+
+        return fecha;
+    }
+
     /**
-     * Solicita al usuario un número decimal (double) dentro de un rando deseado desde consola. 
-     * Permite ingresar valores utilizando coma o punto como separador decimal. 
-     * Reintenta hasta que el valor ingresado sea válido.
+     * Solicita al usuario un número decimal (double) dentro de un rando deseado desde consola. Permite ingresar valores utilizando coma o punto como separador decimal. Reintenta hasta que el valor ingresado sea válido.
      *
      * @param mensaje Mensaje que se muestra al usuario para solicitar el dato.
      * @param mensajeError Mensaje que se muestra en caso de error de formato.

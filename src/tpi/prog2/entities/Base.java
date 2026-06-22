@@ -8,20 +8,17 @@ import java.time.LocalDateTime;
  */
 public abstract class Base {
 
-    protected final Long id;
-    protected boolean eliminado;
-    protected final LocalDateTime createdAt;
+    private static Long contadorId = 1L;
 
-    protected Base(Long id, boolean eliminado, LocalDateTime createdAt) {
-        if (id != null && id < 1) {
-            throw new IllegalArgumentException("ERROR!! El id debe ser mayor a 0.");
-        }
-        if (createdAt == null) {
-            throw new IllegalArgumentException("ERROR!! La fecha de creación no puede ser nula.");
-        }
-        this.id = id;
-        this.eliminado = eliminado;
-        this.createdAt = createdAt;
+    protected Long id;
+    protected boolean eliminado;
+    protected LocalDateTime createdAt;
+
+    public Base() {
+        this.id = contadorId;
+        contadorId++;
+        this.eliminado = false;
+        this.createdAt = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -32,11 +29,26 @@ public abstract class Base {
         return eliminado;
     }
 
+    public void setEliminado(boolean eliminado) {
+        this.eliminado = eliminado;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setEliminado(boolean eliminado) {
-        this.eliminado = eliminado;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        if (createdAt == null) {
+            throw new IllegalArgumentException("ERROR!! La fecha de creación no puede ser nula.");
+        }
+
+        this.createdAt = createdAt;
     }
+
+    public void eliminar() {
+        this.eliminado = true;
+    }
+
+    @Override
+    public abstract String toString();
 }

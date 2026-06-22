@@ -1,14 +1,10 @@
 package tpi.prog2.enums;
 
-/**
- *
- * @author Ezequiel Taboada
- */
 public enum Estado {
-    PENDIENTE("Pedido pendiente"),
-    CONFIRMADO("Pedido confirmado"),
-    TERMINADO("Pedido terminado"),
-    CANCELADO("Pedido cancelado");
+    PENDIENTE("Pendiente"),
+    CONFIRMADO("Confirmado"),
+    TERMINADO("Terminado"),
+    CANCELADO("Cancelado");
 
     private final String descripcion;
 

@@ -1,12 +1,8 @@
 package tpi.prog2.enums;
 
-/**
- *
- * @author Ezequiel Taboada
- */
 public enum Rol {
-    ADMIN("Administrador del sistema"),
-    USUARIO("Usuario del sistema");
+    ADMIN("Administrador"),
+    USUARIO("Usuario");
 
     private final String descripcion;
 
