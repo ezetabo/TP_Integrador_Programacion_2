@@ -67,7 +67,7 @@ public class Main {
                                     break;
                                 case 3:
 //                                HU-PROD-03 – Editar producto
-
+                                    ProductoService.actualizar(productos, categorias);
                                     break;
                                 case 4:
 //                                HU-PROD-04 – Eliminar producto (baja lógica)

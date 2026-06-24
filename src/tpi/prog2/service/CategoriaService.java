@@ -22,11 +22,11 @@ public class CategoriaService {
         String menu = """
                         1. Actualizar Nombre.
                         2. Actualizar Descripcion.
-                        3. Volver al menu principal.
+                        0. Volver al menu de categorias.
                         """;
         Categoria c = lista.get(obtnerIndex(lista, "actualizar"));
         do {
-            int opcion = InputReader.leerIntEnRango(menu, "ERROR.. El dato debe ser numerico", 1, 3);
+            int opcion = InputReader.leerIntEnRango(menu, "ERROR.. El dato debe ser numerico", 0, 2);
             switch (opcion) {
                 case 1:
                     System.out.println("[" + c.getNombre() + "]");

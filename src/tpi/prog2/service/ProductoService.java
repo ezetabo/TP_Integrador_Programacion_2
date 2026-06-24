@@ -4,10 +4,11 @@ import java.util.List;
 import tpi.prog2.entities.Categoria;
 import tpi.prog2.entities.Producto;
 import tpi.prog2.menu.InputReader;
+import static tpi.prog2.service.CategoriaService.obtnerIndex;
 
 public class ProductoService {
 
-    public static void crear(List<Producto> lista, List<Categoria>categorias) {
+    public static void crear(List<Producto> lista, List<Categoria> categorias) {
         String nombre = pedirNombreUnico(lista);
         double precio = InputReader.leerDoubleEnRango("Ingrese el precio de \"" + nombre + "\": ", "Error!! El precio debe ser numerido",
                 0, Double.MAX_VALUE);
@@ -18,7 +19,7 @@ public class ProductoService {
         int index = CategoriaService.obtnerIndex(categorias, "asignar");
         Producto p = crear(nombre, precio, descripcion, stock, imagen);
         p.setCategoria(categorias.get(index));
-        lista.add(p);        
+        lista.add(p);
         System.out.println(">>> Creacion exitosa <<<");
     }
 
@@ -46,5 +47,55 @@ public class ProductoService {
             }
         } while (existe);
         return nombre;
+    }
+
+    public static int obtnerIndex(List<Producto> lista, String accion) {
+        int largo = lista.size();
+        for (int i = 0; i < largo; i++) {
+            Producto p = lista.get(i);
+            if (!p.isEliminado()) {
+                System.out.println((i + 1) + p.info());
+            }
+        }
+        return InputReader.leerIntEnRango("Seleccione el numero del producto que quiere " + accion + ": ",
+                "ERROR... El dato debe ser numerico", 1, largo) - 1;
+    }
+
+    public static void actualizar(List<Producto> lista, List<Categoria> categorias) {
+        boolean volver = true;
+        String menu = """
+                        1. Actualizar Precio.
+                        2. Actualizar Stock.
+                        3. Actualizar Categoria.
+                        0. Volver al menu de productos.
+                        """;
+        Producto p = lista.get(obtnerIndex(lista, "actualizar"));
+        do {
+            int opcion = InputReader.leerIntEnRango(menu, "ERROR.. El dato debe ser numerico", 0, 3);
+            switch (opcion) {
+                case 1:
+                    System.out.println("[" + p.getPrecio() + "]");
+                    double precio = InputReader.leerDoubleEnRango("Ingrese el nuevo precio de \"" + p.getNombre()
+                            + "\": ", "Error!! El precio debe ser numerido", 0, Double.MAX_VALUE);
+                    p.setPrecio(precio);
+                    System.out.println("---Actualizacion exitosa---");
+                    break;
+                case 2:
+                    System.out.println("[" + p.getStock() + "]");
+                    int stock = InputReader.leerIntEnRango("Ingrese el nuevo stock de \"" + p.getNombre() + "\": ",
+                            "Error!! El stock debe ser numerido", 0, Integer.MAX_VALUE);
+                    p.setStock(stock);
+                    System.out.println("---Actualizacion exitosa---");
+                    break;
+                case 3:
+                    System.out.println("[" + p.getCategoria().getNombre() + "]");
+                    int index = CategoriaService.obtnerIndex(categorias, "asignar");
+                    p.setCategoria(categorias.get(index));
+                    System.out.println("---Actualizacion exitosa---");
+                    break;
+                default:
+                    volver = false;
+            }
+        } while (volver);
     }
 }

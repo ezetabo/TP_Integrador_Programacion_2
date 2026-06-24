@@ -125,6 +125,18 @@ public class Producto extends Base {
         );
     }
 
+    public String info() {
+        String nombreCategoria = categoria == null ? "Sin categoría" : categoria.getNombre();
+
+        return String.format(
+                "| Producto: %-25s | Precio: $%10.2f | Stock: %-5d | Categoría: %-20s |",
+                nombre,
+                precio,
+                stock,
+                nombreCategoria
+        );
+    }
+
     @Override
     public boolean equals(Object obj) {
         return this == obj || (obj instanceof Producto other && this.getId().equals(other.getId()));
