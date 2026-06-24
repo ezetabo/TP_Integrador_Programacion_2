@@ -59,7 +59,7 @@ public class Main {
                             switch (BaseService.submenu("productos")) {
                                 case 1:
 //                                HU-PROD-01 – Listar productos
-
+                                    BaseService.listar(productos);
                                     break;
                                 case 2:
 //                                HU-PROD-02 – Crear producto

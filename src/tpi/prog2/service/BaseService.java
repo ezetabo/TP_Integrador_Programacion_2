@@ -100,12 +100,12 @@ public class BaseService {
         usuarios.add(usuarioAdmin);
         usuarios.add(usuarioCliente);
         
-        productos.add(pan);
-        productos.add(facturas);
         productos.add(agua);
         productos.add(gaseosa);
-        productos.add(fideos);
+        productos.add(pan);
+        productos.add(facturas);
         productos.add(arroz);
+        productos.add(fideos);
 
     }
 }

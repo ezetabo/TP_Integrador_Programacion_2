@@ -1,22 +1,14 @@
 package tpi.prog2.service;
 
 import java.util.List;
+import tpi.prog2.entities.Categoria;
 import tpi.prog2.entities.Producto;
 import tpi.prog2.menu.InputReader;
 
 public class ProductoService {
 
     public static Producto crear(List<Producto> lista) {
-        String nombre = null;
-        boolean existe = false;
-        do {
-            nombre = InputReader.leerCadena("Ingrese el nombre del producto: ");
-            existe = existeNombre(lista, nombre);
-            if (existe) {
-                System.out.println("ERROR!!! El nombre ya existe.");
-            }
-        } while (existe);
-
+        String nombre = pedirNombreUnico(lista);
         Double precio = InputReader.leerDoubleEnRango("Ingrese el precio de \n" + nombre + "\n: ", "Error!! El precio debe ser numerido",
                 0, Double.MAX_VALUE);
         String descripcion = InputReader.leerCadena("Ingrese la descripcion de \n" + nombre + "\n: ");
@@ -26,9 +18,10 @@ public class ProductoService {
         return crear(nombre, precio, descripcion, stock, imagen);
     }
 
-    public static Producto crear(String nombre, Double precio, String descripcion, int stock, String imagen){
+    public static Producto crear(String nombre, Double precio, String descripcion, int stock, String imagen) {
         return new Producto(nombre, precio, descripcion, stock, imagen);
     }
+
     private static boolean existeNombre(List<Producto> lista, String nombre) {
         for (Producto producto : lista) {
             if (producto.getNombre().equalsIgnoreCase(nombre.trim())) {
@@ -36,5 +29,18 @@ public class ProductoService {
             }
         }
         return false;
+    }
+
+    private static String pedirNombreUnico(List<Producto> lista) {
+        String nombre = null;
+        boolean existe = false;
+        do {
+            nombre = InputReader.leerCadena("Ingrese el nombre del producto: ");
+            existe = existeNombre(lista, nombre);
+            if (existe) {
+                System.out.println("ERROR!!! El nombre ya existe.");
+            }
+        } while (existe);
+        return nombre;
     }
 }
