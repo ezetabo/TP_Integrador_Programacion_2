@@ -260,7 +260,7 @@ public class InputReader {
         String menu = """
                 1. ADMIN
                 2. USUARIO
-                Rol: """;
+                Selecciones el Rol: """;
         int opcion = InputReader.leerIntEnRango(menu, "Ingrese una opción válida.", 1, 2);
 
         switch (opcion) {
@@ -279,7 +279,7 @@ public class InputReader {
                 2. CONFIRMADO
                 3. TERMINADO
                 4. CANCELADO
-                Estado: """;
+                Selecione el Estado: """;
         int opcion = InputReader.leerIntEnRango(menu, "Ingrese una opción válida.", 1, 4);
 
         switch (opcion) {
@@ -301,7 +301,7 @@ public class InputReader {
                 1. TARJETA
                 2. TRANSFERENCIA
                 3. EFECTIVO
-                Forma de pago: """;
+                Seleccione la Forma de pago: """;
         int opcion = InputReader.leerIntEnRango(menu, "Ingrese una opción válida.", 1, 3);
 
         switch (opcion) {

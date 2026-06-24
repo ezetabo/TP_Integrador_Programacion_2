@@ -10,6 +10,7 @@ import tpi.prog2.menu.InputReader;
 import tpi.prog2.service.BaseService;
 import tpi.prog2.service.CategoriaService;
 import tpi.prog2.service.ProductoService;
+import tpi.prog2.service.UsuarioService;
 
 public class Main {
 
@@ -88,7 +89,7 @@ public class Main {
                                     break;
                                 case 2:
 //                                HU-USR-02 – Crear usuario
-
+                                    UsuarioService.crear(usuarios);
                                     break;
                                 case 3:
 //                                HU-USR-03 – Editar usuario
