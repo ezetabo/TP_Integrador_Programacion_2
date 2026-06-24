@@ -31,12 +31,11 @@ public class Main {
                             case 1:
 //                                HU-CAT-01 – Listar categorías
                                 BaseService.listar(categorias);
-                                CategoriaService.actualizar(categorias);
-                                BaseService.listar(categorias);
                                 break;
                             case 2:
 //                                HU-CAT-02 – Crear categoría
-
+                                categorias.add(CategoriaService.crear(categorias));
+                                System.out.println(">>> Creacion exitosa <<<");
                                 break;
                             case 3:
 //                                HU-CAT-03 – Editar categoría
