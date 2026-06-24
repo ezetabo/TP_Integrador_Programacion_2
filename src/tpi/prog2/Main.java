@@ -38,10 +38,10 @@ public class Main {
                                     // HU-CAT-01 – Listar categorías
                                     if (BaseService.tieneActivos(categorias)) {
                                         switch (InputReader.leerIntEnRango("""
-                                                                       1. Listar solo categorias.
-                                                                       2. Listar categorias y sus productos.
-                                                                       Seleccione: 
-                                                                       """, "ERROR.. El dato debe ser numerico", 1, 2)) {
+                                                1. Listar solo categorias.
+                                                2. Listar categorias y sus productos.
+                                                Seleccione:
+                                                """, "ERROR.. El dato debe ser numerico", 1, 2)) {
                                             case 1:
                                                 BaseService.listar(categorias);
                                                 break;
@@ -66,9 +66,10 @@ public class Main {
                                     }
                                     break;
                                 case 4:
-                                    // HU-CAT-04 – Eliminar categoría (baja lógica)                                    
+                                    // HU-CAT-04 – Eliminar categoría (baja lógica)
                                     if (BaseService.tieneActivos(categorias)) {
-                                        CategoriaService.eliminar(categorias);;
+                                        CategoriaService.eliminar(categorias);
+                                        ;
                                     } else {
                                         System.out.println("No hay categorias activas");
                                     }
@@ -83,7 +84,7 @@ public class Main {
                         do {
                             switch (BaseService.submenu("productos")) {
                                 case 1:
-                                    // HU-PROD-01 – Listar productos                            
+                                    // HU-PROD-01 – Listar productos
                                     if (BaseService.tieneActivos(productos)) {
                                         BaseService.listar(productos);
                                     } else {
@@ -95,7 +96,8 @@ public class Main {
                                     if (BaseService.tieneActivos(categorias)) {
                                         ProductoService.crear(productos, categorias);
                                     } else {
-                                        System.out.println("Debe existir al menos una categoria antes de crear un producto");
+                                        System.out.println(
+                                                "Debe existir al menos una categoria antes de crear un producto");
                                     }
                                     break;
                                 case 3:
@@ -127,10 +129,10 @@ public class Main {
                                     // HU-USR-01 – Listar usuarios
                                     if (BaseService.tieneActivos(usuarios)) {
                                         switch (InputReader.leerIntEnRango("""
-                                                                       1. Listar solo usuarios.
-                                                                       2. Listar usarios y sus pedidos.
-                                                                       Seleccione: 
-                                                                       """, "ERROR.. El dato debe ser numerico", 1, 2)) {
+                                                1. Listar solo usuarios.
+                                                2. Listar usarios y sus pedidos.
+                                                Seleccione:
+                                                """, "ERROR.. El dato debe ser numerico", 1, 2)) {
                                             case 1:
                                                 BaseService.listar(usuarios);
                                                 break;
@@ -180,11 +182,11 @@ public class Main {
                                         System.out.println("No hay pedidos activos");
                                     }
                                     switch (InputReader.leerIntEnRango("""
-                                                                       1. Listar solo pedidos.
-                                                                       2. Listar pedidos y sus detalles.
-                                                                       3. Listar pedidos por usuario.
-                                                                       Seleccione: 
-                                                                       """, "ERROR.. El dato debe ser numerico", 1, 3)) {
+                                            1. Listar solo pedidos.
+                                            2. Listar pedidos y sus detalles.
+                                            3. Listar pedidos por usuario.
+                                            Seleccione:
+                                            """, "ERROR.. El dato debe ser numerico", 1, 3)) {
                                         case 1:
                                             BaseService.listar(pedidos);
                                             break;
@@ -197,10 +199,14 @@ public class Main {
                                     break;
                                 case 2:
                                     // HU-PED-02 – Crear pedido con detalles
-                                    if (BaseService.tieneActivos(usuarios)) {
-
+                                    if (BaseService.tieneActivos(usuarios)
+                                            && ProductoService.existeDisponible(productos)) {
+//                                        do {
+                                            PedidoService.crear(pedidos, usuarios, productos);
+//                                       
                                     } else {
-                                        System.out.println("Debe existir al menos un usuario antes de crear un pedido");
+                                        System.out.println(
+                                                "Debe existir al menos un usuario y un producto con stock mayor a 0 antes de crear un pedido");
                                     }
                                     break;
                                 case 3:

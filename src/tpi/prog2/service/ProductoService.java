@@ -4,7 +4,6 @@ import java.util.List;
 import tpi.prog2.entities.Categoria;
 import tpi.prog2.entities.Producto;
 import tpi.prog2.menu.InputReader;
-import static tpi.prog2.service.CategoriaService.obtnerIndex;
 
 public class ProductoService {
 
@@ -53,12 +52,25 @@ public class ProductoService {
         int largo = lista.size();
         for (int i = 0; i < largo; i++) {
             Producto p = lista.get(i);
-            if (!p.isEliminado()) {
+            if (!p.isEliminado() && p.getStock() > 0) {
                 System.out.println((i + 1) + p.info());
             }
         }
         return InputReader.leerIntEnRango("Seleccione el numero del producto que quiere " + accion + ": ",
                 "ERROR... El dato debe ser numerico", 1, largo) - 1;
+    }
+
+    public static Producto obtnerUno(List<Producto> lista, String accion) {
+        int largo = lista.size();
+        for (int i = 0; i < largo; i++) {
+            Producto u = lista.get(i);
+            if (!u.isEliminado() && u.getStock() > 0) {
+                System.out.println((i + 1) + u.info());
+            }
+        }
+        int index = InputReader.leerIntEnRango("Seleccione el numero de producto que quiere " + accion + ": ",
+                "ERROR... El dato debe ser numerico", 1, largo) - 1;
+        return lista.get(index);
     }
 
     public static void actualizar(List<Producto> lista, List<Categoria> categorias) {
@@ -113,5 +125,15 @@ public class ProductoService {
         } else {
             System.out.println("---Eliminacion cancelada---");
         }
+    }
+
+    public static boolean existeDisponible(List<Producto> lista) {
+        for (Producto p : lista) {
+            if (!p.isEliminado() && p.getStock() > 0) {
+                return true;
+            }
+        }
+        return false;
+
     }
 }

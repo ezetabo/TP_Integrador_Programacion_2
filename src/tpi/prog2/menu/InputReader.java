@@ -175,8 +175,12 @@ public class InputReader {
             try {
                 String textoIngresado = leerCadena(mensaje);
                 numero = Integer.parseInt(textoIngresado);
-                if (numero < minimo || numero > maximo) {
-                    System.out.printf("El valor debe estar entre %d y %d.\n", minimo, maximo);
+                if (numero < minimo) {
+                    System.out.printf("El valor no puede menor a %d.\n", minimo);
+                    continue;
+                }
+                if (numero > maximo) {
+                    System.out.printf("El valor no puede ser mayor a %d.\n", maximo);
                     continue;
                 }
                 datoValido = true;
@@ -248,12 +252,12 @@ public class InputReader {
     public static boolean confirmar(String mensaje) {
         String respuesta;
         do {
-            respuesta = InputReader.leerCadena(mensaje).trim().toUpperCase();
-            if (!respuesta.equals("S") && !respuesta.equals("N")) {
+            respuesta = InputReader.leerCadena(mensaje).trim();
+            if (!respuesta.equalsIgnoreCase("S") && !respuesta.equalsIgnoreCase("N")) {
                 System.out.println("Ingrese S o N.");
             }
-        } while (!respuesta.equals("S") && !respuesta.equals("N"));
-        return respuesta.equals("S");
+        } while (!respuesta.equalsIgnoreCase("S") && !respuesta.equalsIgnoreCase("N"));
+        return respuesta.equalsIgnoreCase("S");
     }
 
     public static Rol leerRol() {
