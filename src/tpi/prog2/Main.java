@@ -39,7 +39,7 @@ public class Main {
                                 break;
                             case 3:
 //                                HU-CAT-03 – Editar categoría
-
+                                CategoriaService.actualizar(categorias);
                                 break;
                             case 4:
 //                                HU-CAT-04 – Eliminar categoría (baja lógica)
