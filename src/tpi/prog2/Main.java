@@ -6,7 +6,9 @@ import tpi.prog2.entities.Categoria;
 import tpi.prog2.entities.Pedido;
 import tpi.prog2.entities.Producto;
 import tpi.prog2.entities.Usuario;
+import tpi.prog2.menu.InputReader;
 import tpi.prog2.service.BaseService;
+import tpi.prog2.service.CategoriaService;
 
 public class Main {
 
@@ -16,79 +18,104 @@ public class Main {
         List<Producto> productos = new ArrayList<>();
         List<Usuario> usuarios = new ArrayList<>();
         List<Pedido> pedidos = new ArrayList<>();
+
+        BaseService.cargarDatosIniciales(categorias, productos, usuarios, pedidos);
+
         do {
             try {
                 opcion = BaseService.menu();
                 switch (opcion) {
                     case 1:
+//                        Épica 1 – Gestión de Categorías
                         switch (opcion) {
                             case 1:
-
+//                                HU-CAT-01 – Listar categorías
+                                BaseService.listar(categorias);
+                                CategoriaService.actualizar(categorias);
+                                BaseService.listar(categorias);
                                 break;
                             case 2:
+//                                HU-CAT-02 – Crear categoría
 
                                 break;
                             case 3:
+//                                HU-CAT-03 – Editar categoría
 
                                 break;
                             case 4:
+//                                HU-CAT-04 – Eliminar categoría (baja lógica)
 
-                                break;                          
+                                break;
                         }
                         break;
                     case 2:
+//                        Épica 2 – Gestión de Productos
                         switch (opcion) {
                             case 1:
+//                                HU-PROD-01 – Listar productos
 
                                 break;
                             case 2:
+//                                HU-PROD-02 – Crear producto
 
                                 break;
                             case 3:
+//                                HU-PROD-03 – Editar producto
 
                                 break;
                             case 4:
+//                                HU-PROD-04 – Eliminar producto (baja lógica)
 
-                                break;                           
+                                break;
                         }
                         break;
                     case 3:
+//                        Épica 3 – Gestión de Usuarios
                         switch (opcion) {
                             case 1:
+//                                HU-USR-01 – Listar usuarios
 
                                 break;
                             case 2:
+//                                HU-USR-02 – Crear usuario
 
                                 break;
                             case 3:
+//                                HU-USR-03 – Editar usuario
 
                                 break;
                             case 4:
+//                                HU-USR-04 – Eliminar usuario (baja lógica)
 
-                                break;                           
+                                break;
                         }
                         break;
                     case 4:
+//                        Épica 4 – Gestión de Pedidos y Detalles
                         switch (opcion) {
                             case 1:
+//                                HU-PED-01 – Listar pedidos
 
                                 break;
                             case 2:
+//                                HU-PED-02 – Crear pedido con detalles
 
                                 break;
                             case 3:
+//                                HU-PED-03 – Actualizar estado/forma de pago del pedido
 
                                 break;
                             case 4:
+//                                HU-PED-04 – Eliminar pedido (baja lógica)
 
-                                break;                            
+                                break;
                         }
                         break;
                     default:
                         System.out.println(">>> Fin del programa <<<");
-                        ;
                 }
             } catch (Exception e) {
+                InputReader.mostrarError(e);
             }
 
         } while (opcion != 0);

@@ -176,7 +176,7 @@ public class InputReader {
                 String textoIngresado = leerCadena(mensaje);
                 numero = Integer.parseInt(textoIngresado);
                 if (numero < minimo || numero > maximo) {
-                    System.out.printf("El valor debe estar entre %d y %d.", minimo, maximo);
+                    System.out.printf("El valor debe estar entre %d y %d.\n", minimo, maximo);
                     continue;
                 }
                 datoValido = true;
@@ -316,7 +316,7 @@ public class InputReader {
         }
     }
 
-    public static void mostrarError(RuntimeException e) {
+    public static void mostrarError(Exception e) {
         System.out.println("ERROR: " + e.getMessage());
     }
 }

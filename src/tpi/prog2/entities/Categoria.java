@@ -19,7 +19,6 @@ public class Categoria extends Base {
         super();
         setNombre(nombre);
         setDescripcion(descripcion);
-        setProductos(productos);
         this.productos = new ArrayList<>();
     }
 
@@ -96,6 +95,14 @@ public class Categoria extends Base {
         }
 
         return false;
+    }
+    
+    public String info(){
+        return String.format(
+                "| Categoría: %-25s | Descripción: %-40s |",                
+                nombre,
+                descripcion
+        );
     }
 
     @Override

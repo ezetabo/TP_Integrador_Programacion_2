@@ -64,7 +64,7 @@ public class DetallePedido extends Base {
         if (producto == null || producto.getPrecio() == null) {
             return 0.0;
         }
-        return subtotal;
+        return producto.getPrecio() * cantidad;
     }
 
     @Override

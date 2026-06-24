@@ -14,7 +14,7 @@ import tpi.prog2.menu.InputReader;
 
 public class BaseService {
 
-    public static void listar(List<Base> lista) {
+    public static void listar(List<? extends Base> lista) {
         for (Base elemento : lista) {
             if (!elemento.isEliminado()) {
                 System.out.println(elemento);
@@ -22,7 +22,7 @@ public class BaseService {
         }
     }
 
-    public static Base buscarPorId(List<Base> lista, long id) {
+    public static Base buscarPorId(List<? extends Base> lista, long id) {
         for (Base elemento : lista) {
             if (!elemento.isEliminado()) {
                 return elemento;
@@ -31,7 +31,7 @@ public class BaseService {
         return null;
     }
 
-    public static boolean eliminarLogico(List<Base> lista, long id) {
+    public static boolean eliminarLogico(List<? extends Base> lista, long id) {
         Base elemento = buscarPorId(lista, id);
         if (elemento != null) {
             elemento.eliminar();
@@ -67,7 +67,7 @@ public class BaseService {
         return InputReader.leerIntEnRango(menu, "Ingrese un número válido.", 0, 4);
     }
 
-    private static void cargarDatosIniciales(List<Categoria>categorias, List<Producto>productos, 
+    public static void cargarDatosIniciales(List<Categoria>categorias, List<Producto>productos, 
             List<Usuario>usuarios, List<Pedido>pedidos) {
 
         Categoria bebidas = CategoriaService.crear("Bebidas", "Bebidas frías y calientes");
@@ -106,9 +106,9 @@ public class BaseService {
         pedido3.addDetallePedido(2, 1800.0, arroz);
         pedido3.addDetallePedido(1, 1600.0, fideos);
         
-        categorias.add(almacen);
-        categorias.add(panificados);
         categorias.add(bebidas);
+        categorias.add(panificados);
+        categorias.add(almacen);
         
         pedidos.add(pedido1);
         pedidos.add(pedido2);
