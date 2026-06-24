@@ -97,7 +97,7 @@ public class Main {
                                     break;
                                 case 4:
 //                                HU-USR-04 – Eliminar usuario (baja lógica)
-
+                                    UsuarioService.eliminar(usuarios);
                                     break;
                                 default:
                                     seguirSubmenu = false;

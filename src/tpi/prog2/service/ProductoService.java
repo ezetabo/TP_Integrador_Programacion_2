@@ -113,6 +113,5 @@ public class ProductoService {
         } else {
             System.out.println("---Eliminacion cancelada---");
         }
-
     }
 }

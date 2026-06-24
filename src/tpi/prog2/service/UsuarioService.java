@@ -114,4 +114,20 @@ public class UsuarioService {
             }
         } while (volver);
     }
+    
+        public static void eliminar(List<Usuario> lista) {
+        int index = obtnerIndex(lista, "eliminar");
+        Usuario u = lista.get(index);
+        System.out.println("[" + u.info() + "]");
+
+        int borrar = InputReader.leerIntEnRango("Seguro que desea eliminar este usuario? \n1.SI\n2.NO\nSeleccione: ",
+                "ERROR.. El dato debe ser numerico.", 1, 2);
+        if (borrar == 1) {
+            u.setEliminado(true);
+            System.out.println("---Eliminacion exitosa---");
+        } else {
+            System.out.println("---Eliminacion cancelada---");
+        }
+    }
+    
 }
