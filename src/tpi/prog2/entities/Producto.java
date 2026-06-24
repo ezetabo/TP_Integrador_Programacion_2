@@ -1,6 +1,5 @@
 package tpi.prog2.entities;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -93,7 +92,7 @@ public class Producto extends Base {
     }
 
     private void calcularDisponible() {
-        this.disponible = this.stock > 0 ? true : false;
+        this.disponible = this.stock > 0;
 
     }
 
@@ -112,28 +111,16 @@ public class Producto extends Base {
 
     @Override
     public String toString() {
-        String nombreCategoria = categoria == null ? "Sin categoría" : categoria.getNombre();
-
-        return String.format(
-                "| ID: %-4s | Producto: %-25s | Precio: $%10.2f | Stock: %-5d | Disponible: %-5s | Categoría: %-20s |",
-                getId() == null ? "N/A" : getId(),
-                nombre,
-                precio,
-                stock,
-                disponible ? "Sí" : "No",
-                nombreCategoria
-        );
+        return String.format("| ID: %-4s %s", id, info());
     }
 
-    public String info() {
-        String nombreCategoria = categoria == null ? "Sin categoría" : categoria.getNombre();
-
+    public String info() { 
         return String.format(
                 "| Producto: %-25s | Precio: $%10.2f | Stock: %-5d | Categoría: %-20s |",
                 nombre,
                 precio,
                 stock,
-                nombreCategoria
+                categoria == null ? "Sin categoría" : categoria.getNombre()
         );
     }
 

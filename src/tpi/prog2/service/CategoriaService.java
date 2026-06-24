@@ -92,11 +92,19 @@ public class CategoriaService {
             if (borrar == 1) {
                 c.setEliminado(true);
                 System.out.println("---Eliminacion exitosa---");
-            }else{
+            } else {
                 System.out.println("---Eliminacion cancelada---");
             }
-        }else{
+        } else {
             System.out.println(">>> No se puede eliminar ya que tiene productos activos asociados <<<");
+        }
+    }
+
+    public static void listarConListado(List<Categoria> lista) {
+        for (Categoria elemento : lista) {
+            if (!elemento.isEliminado()) {
+                System.out.println(elemento.infoConListado());
+            }
         }
     }
 

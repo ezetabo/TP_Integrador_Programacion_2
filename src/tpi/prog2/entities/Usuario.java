@@ -149,40 +149,33 @@ public class Usuario extends Base {
 
     @Override
     public String toString() {
+        return String.format("| ID: %-4s %s\n", id, info());
+    }
+
+    public String infoConListado() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format(
-                "| ID: %-4s | Usuario: %-12s %-12s | Mail: %-15s | Celular: %-15s | Rol: %-8s |\n",
-                id,
-                nombre,
-                apellido,
-                mail,
-                celular,
-                rol
-        ));
+        sb.append(toString());
         sb.append("Pedidos:%n".formatted());
         if (pedidos.isEmpty()) {
             sb.append("  Sin pedidos cargados.\n");
         } else {
             for (Pedido pedido : pedidos) {
                 sb.append("  ")
-                        .append(pedido)
-                        .append(System.lineSeparator());
+                        .append(pedido);
             }
         }
         return sb.toString();
     }
 
     public String info() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format(
+        return String.format(
                 "| Usuario: %-12s %-12s | Mail: %-15s | Celular: %-15s | Rol: %-8s |",
                 nombre,
                 apellido,
                 mail,
                 celular,
                 rol
-        ));
-        return sb.toString();
+        );
     }
 
     @Override

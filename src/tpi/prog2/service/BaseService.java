@@ -17,9 +17,20 @@ public class BaseService {
     public static void listar(List<? extends Base> lista) {
         for (Base elemento : lista) {
             if (!elemento.isEliminado()) {
-                System.out.println(elemento);
+                System.out.print(elemento);
             }
         }
+    }
+
+    public static boolean tieneActivos(List<? extends Base> lista) {
+        if (!lista.isEmpty()) {
+            for (Base elemento : lista) {
+                if (!elemento.isEliminado()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static int submenu(String tipo) {
@@ -50,8 +61,8 @@ public class BaseService {
         return InputReader.leerIntEnRango(menu, "Ingrese un número válido.", 0, 4);
     }
 
-    public static void cargarDatosIniciales(List<Categoria>categorias, List<Producto>productos, 
-            List<Usuario>usuarios, List<Pedido>pedidos) {
+    public static void cargarDatosIniciales(List<Categoria> categorias, List<Producto> productos,
+            List<Usuario> usuarios, List<Pedido> pedidos) {
 
         Categoria bebidas = CategoriaService.crear("Bebidas", "Bebidas frías y calientes");
         Categoria panificados = CategoriaService.crear("Panificados", "Productos de panadería");
@@ -81,25 +92,25 @@ public class BaseService {
         facturas.setCategoria(panificados);
         arroz.setCategoria(almacen);
         fideos.setCategoria(almacen);
-        
+
         pedido1.addDetallePedido(2, 1200.0, agua);
         pedido1.addDetallePedido(1, 900.0, pan);
         pedido2.addDetallePedido(2, 1200.0, gaseosa);
         pedido2.addDetallePedido(3, 6200.0, facturas);
         pedido3.addDetallePedido(2, 1800.0, arroz);
         pedido3.addDetallePedido(1, 1600.0, fideos);
-        
+
         categorias.add(bebidas);
         categorias.add(panificados);
         categorias.add(almacen);
-        
+
         pedidos.add(pedido1);
         pedidos.add(pedido2);
         pedidos.add(pedido3);
-        
+
         usuarios.add(usuarioAdmin);
         usuarios.add(usuarioCliente);
-        
+
         productos.add(agua);
         productos.add(gaseosa);
         productos.add(pan);

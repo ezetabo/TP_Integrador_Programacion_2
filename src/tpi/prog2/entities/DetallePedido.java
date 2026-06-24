@@ -68,8 +68,7 @@ public class DetallePedido extends Base {
     }
 
     @Override
-    public String toString() {
-        
+    public String toString() {        
         return String.format(
                 "| ID: %-4s | Producto: %-25s | Cantidad: %-5d | Subtotal: $%10.2f |",
                 id,

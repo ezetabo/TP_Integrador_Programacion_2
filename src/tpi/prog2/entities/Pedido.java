@@ -157,21 +157,14 @@ public class Pedido extends Base implements Calculable {
     }
 
     @Override
-    public String toString() {     
+    public String toString() {
+        return String.format("| ID: %-4s %s\n", id, info());
+    }
+
+    public String infoConListado() {
         StringBuilder sb = new StringBuilder();
-
-        sb.append(String.format(
-                "| ID: %-4s | Fecha: %-10s | Usuario: %-15s | Estado: %-12s | Pago: %-14s | Total: $%10.2f |\n",
-                id,
-                fecha,
-                usuario.getNombre(),
-                estado,
-                formaPago,
-                total
-        ));
-
+        sb.append(toString());
         sb.append("Detalles:%n".formatted());
-
         if (detalles.isEmpty()) {
             sb.append("  Sin detalles cargados.\n");
         } else {
@@ -181,8 +174,18 @@ public class Pedido extends Base implements Calculable {
                         .append(System.lineSeparator());
             }
         }
-
         return sb.toString();
+    }
+
+    public String info() {
+        return String.format(
+                "| Fecha: %-10s | Usuario: %-15s | Estado: %-12s | Pago: %-14s | Total: $%10.2f |",
+                fecha,
+                usuario.getNombre(),
+                estado,
+                formaPago,
+                total
+        );
     }
 
     @Override

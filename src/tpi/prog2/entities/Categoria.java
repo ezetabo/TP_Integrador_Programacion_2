@@ -96,28 +96,19 @@ public class Categoria extends Base {
 
         return false;
     }
-    
-    public String info(){
+
+    public String info() {
         return String.format(
-                "| Categoría: %-25s | Descripción: %-40s |",                
+                "| Categoría: %-25s | Descripción: %-40s |",
                 nombre,
                 descripcion
         );
     }
 
-    @Override
-    public String toString() {
+    public String infoConListado() {
         StringBuilder sb = new StringBuilder();
-
-        sb.append(String.format(
-                "| ID: %-4s | Categoría: %-25s | Descripción: %-40s |\n",
-                id,
-                nombre,
-                descripcion
-        ));
-
+        sb.append(toString());
         sb.append("Productos:%n".formatted());
-
         if (productos.isEmpty()) {
             sb.append("  Sin productos cargados.\n");
         } else {
@@ -127,8 +118,12 @@ public class Categoria extends Base {
                         .append(System.lineSeparator());
             }
         }
-
         return sb.toString();
+    }
+
+    @Override
+    public String toString() { 
+        return String.format("| ID: %-4s %s\n", id, info());
     }
 
     @Override

@@ -57,6 +57,19 @@ public class UsuarioService {
                 "ERROR... El dato debe ser numerico", 1, largo) - 1;
     }
 
+    public static Usuario obtnerUno(List<Usuario> lista, String accion) {
+        int largo = lista.size();
+        for (int i = 0; i < largo; i++) {
+            Usuario u = lista.get(i);
+            if (!u.isEliminado()) {
+                System.out.println((i + 1) + u.info());
+            }
+        }
+        int index = InputReader.leerIntEnRango("Seleccione el numero de usuario que quiere " + accion + ": ",
+                "ERROR... El dato debe ser numerico", 1, largo) - 1;
+        return lista.get(index);
+    }
+
     public static void actualizar(List<Usuario> lista) {
         boolean volver = true;
         String menu = """
@@ -98,7 +111,7 @@ public class UsuarioService {
                     System.out.println("---Actualizacion exitosa---");
                     break;
                 case 5:
-                    System.out.println("[" + u.getContrasenia()+ "]");
+                    System.out.println("[" + u.getContrasenia() + "]");
                     String contrasenia = InputReader.leerCadena("Ingrese la nueva contraseña: ");
                     u.setContrasenia(contrasenia);
                     System.out.println("---Actualizacion exitosa---");
@@ -114,8 +127,8 @@ public class UsuarioService {
             }
         } while (volver);
     }
-    
-        public static void eliminar(List<Usuario> lista) {
+
+    public static void eliminar(List<Usuario> lista) {
         int index = obtnerIndex(lista, "eliminar");
         Usuario u = lista.get(index);
         System.out.println("[" + u.info() + "]");
@@ -129,5 +142,12 @@ public class UsuarioService {
             System.out.println("---Eliminacion cancelada---");
         }
     }
-    
+
+    public static void listarConListado(List<Usuario> lista) {
+        for (Usuario elemento : lista) {
+            if (!elemento.isEliminado()) {
+                System.out.print(elemento.infoConListado());
+            }
+        }
+    }
 }

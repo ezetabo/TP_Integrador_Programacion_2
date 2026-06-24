@@ -9,6 +9,7 @@ import tpi.prog2.entities.Usuario;
 import tpi.prog2.menu.InputReader;
 import tpi.prog2.service.BaseService;
 import tpi.prog2.service.CategoriaService;
+import tpi.prog2.service.PedidoService;
 import tpi.prog2.service.ProductoService;
 import tpi.prog2.service.UsuarioService;
 
@@ -35,7 +36,22 @@ public class Main {
                             switch (BaseService.submenu("categorias")) {
                                 case 1:
                                     // HU-CAT-01 – Listar categorías
-                                    BaseService.listar(categorias);
+                                    if (BaseService.tieneActivos(categorias)) {
+                                        switch (InputReader.leerIntEnRango("""
+                                                                       1. Listar solo categorias.
+                                                                       2. Listar categorias y sus productos.
+                                                                       Seleccione: 
+                                                                       """, "ERROR.. El dato debe ser numerico", 1, 2)) {
+                                            case 1:
+                                                BaseService.listar(categorias);
+                                                break;
+                                            default:
+                                                CategoriaService.listarConListado(categorias);
+                                        }
+                                    } else {
+                                        System.out.println("No hay categorias activas");
+                                    }
+
                                     break;
                                 case 2:
                                     // HU-CAT-02 – Crear categoría
@@ -43,11 +59,19 @@ public class Main {
                                     break;
                                 case 3:
                                     // HU-CAT-03 – Editar categoría
-                                    CategoriaService.actualizar(categorias);
+                                    if (BaseService.tieneActivos(categorias)) {
+                                        CategoriaService.actualizar(categorias);
+                                    } else {
+                                        System.out.println("No hay categorias activas");
+                                    }
                                     break;
                                 case 4:
-                                    // HU-CAT-04 – Eliminar categoría (baja lógica)
-                                    CategoriaService.eliminar(categorias);
+                                    // HU-CAT-04 – Eliminar categoría (baja lógica)                                    
+                                    if (BaseService.tieneActivos(categorias)) {
+                                        CategoriaService.eliminar(categorias);;
+                                    } else {
+                                        System.out.println("No hay categorias activas");
+                                    }
                                     break;
                                 default:
                                     seguirSubmenu = false;
@@ -59,20 +83,36 @@ public class Main {
                         do {
                             switch (BaseService.submenu("productos")) {
                                 case 1:
-                                    // HU-PROD-01 – Listar productos
-                                    BaseService.listar(productos);
+                                    // HU-PROD-01 – Listar productos                            
+                                    if (BaseService.tieneActivos(productos)) {
+                                        BaseService.listar(productos);
+                                    } else {
+                                        System.out.println("No hay productos activos");
+                                    }
                                     break;
                                 case 2:
                                     // HU-PROD-02 – Crear producto
-                                    ProductoService.crear(productos, categorias);
+                                    if (BaseService.tieneActivos(categorias)) {
+                                        ProductoService.crear(productos, categorias);
+                                    } else {
+                                        System.out.println("Debe existir al menos una categoria antes de crear un producto");
+                                    }
                                     break;
                                 case 3:
                                     // HU-PROD-03 – Editar producto
-                                    ProductoService.actualizar(productos, categorias);
+                                    if (BaseService.tieneActivos(productos)) {
+                                        ProductoService.actualizar(productos, categorias);
+                                    } else {
+                                        System.out.println("No hay productos activos");
+                                    }
                                     break;
                                 case 4:
                                     // HU-PROD-04 – Eliminar producto (baja lógica)
-                                    ProductoService.eliminar(productos);
+                                    if (BaseService.tieneActivos(productos)) {
+                                        ProductoService.eliminar(productos);
+                                    } else {
+                                        System.out.println("No hay productos activos");
+                                    }
                                     break;
                                 default:
                                     seguirSubmenu = false;
@@ -85,7 +125,22 @@ public class Main {
                             switch (BaseService.submenu("usuarios")) {
                                 case 1:
                                     // HU-USR-01 – Listar usuarios
-                                    BaseService.listar(usuarios);
+                                    if (BaseService.tieneActivos(usuarios)) {
+                                        switch (InputReader.leerIntEnRango("""
+                                                                       1. Listar solo usuarios.
+                                                                       2. Listar usarios y sus pedidos.
+                                                                       Seleccione: 
+                                                                       """, "ERROR.. El dato debe ser numerico", 1, 2)) {
+                                            case 1:
+                                                BaseService.listar(usuarios);
+                                                break;
+                                            default:
+                                                UsuarioService.listarConListado(usuarios);
+                                        }
+                                    } else {
+                                        System.out.println("No hay usuarios activos");
+                                    }
+
                                     break;
                                 case 2:
                                     // HU-USR-02 – Crear usuario
@@ -93,11 +148,19 @@ public class Main {
                                     break;
                                 case 3:
                                     // HU-USR-03 – Editar usuario
-                                    UsuarioService.actualizar(usuarios);
+                                    if (BaseService.tieneActivos(usuarios)) {
+                                        UsuarioService.actualizar(usuarios);
+                                    } else {
+                                        System.out.println("No hay usuarios activos");
+                                    }
                                     break;
                                 case 4:
                                     // HU-USR-04 – Eliminar usuario (baja lógica)
-                                    UsuarioService.eliminar(usuarios);
+                                    if (BaseService.tieneActivos(usuarios)) {
+                                        UsuarioService.eliminar(usuarios);
+                                    } else {
+                                        System.out.println("No hay usuarios activos");
+                                    }
                                     break;
                                 default:
                                     seguirSubmenu = false;
@@ -111,19 +174,50 @@ public class Main {
                             switch (BaseService.submenu("pedidos y detalles")) {
                                 case 1:
                                     // HU-PED-01 – Listar pedidos
-                                    BaseService.listar(pedidos);
+                                    if (BaseService.tieneActivos(pedidos)) {
+
+                                    } else {
+                                        System.out.println("No hay pedidos activos");
+                                    }
+                                    switch (InputReader.leerIntEnRango("""
+                                                                       1. Listar solo pedidos.
+                                                                       2. Listar pedidos y sus detalles.
+                                                                       3. Listar pedidos por usuario.
+                                                                       Seleccione: 
+                                                                       """, "ERROR.. El dato debe ser numerico", 1, 3)) {
+                                        case 1:
+                                            BaseService.listar(pedidos);
+                                            break;
+                                        case 2:
+                                            PedidoService.listarConListado(pedidos);
+                                            break;
+                                        default:
+                                            PedidoService.listarPorUsuario(usuarios);
+                                    }
                                     break;
                                 case 2:
                                     // HU-PED-02 – Crear pedido con detalles
+                                    if (BaseService.tieneActivos(usuarios)) {
 
+                                    } else {
+                                        System.out.println("Debe existir al menos un usuario antes de crear un pedido");
+                                    }
                                     break;
                                 case 3:
                                     // HU-PED-03 – Actualizar estado/forma de pago del pedido
+                                    if (BaseService.tieneActivos(pedidos)) {
 
+                                    } else {
+                                        System.out.println("No hay pedidos activos");
+                                    }
                                     break;
                                 case 4:
                                     // HU-PED-04 – Eliminar pedido (baja lógica)
+                                    if (BaseService.tieneActivos(pedidos)) {
 
+                                    } else {
+                                        System.out.println("No hay pedidos activos");
+                                    }
                                     break;
                                 default:
                                     seguirSubmenu = false;
