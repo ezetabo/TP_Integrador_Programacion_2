@@ -14,6 +14,7 @@ public class Main {
 
     public static void main(String[] args) {
         int opcion = 0;
+        boolean seguirSubmenu;
         List<Categoria> categorias = new ArrayList<>();
         List<Producto> productos = new ArrayList<>();
         List<Usuario> usuarios = new ArrayList<>();
@@ -23,92 +24,110 @@ public class Main {
 
         do {
             try {
+                seguirSubmenu = true;
                 opcion = BaseService.menu();
                 switch (opcion) {
-                    case 1:
 //                        Épica 1 – Gestión de Categorías
-                        switch (opcion) {
-                            case 1:
+                    case 1:
+                        do {
+                            switch (BaseService.submenu("categorias")) {
+                                case 1:
 //                                HU-CAT-01 – Listar categorías
-                                BaseService.listar(categorias);
-                                break;
-                            case 2:
+                                    BaseService.listar(categorias);
+                                    break;
+                                case 2:
 //                                HU-CAT-02 – Crear categoría
-                                categorias.add(CategoriaService.crear(categorias));
-                                System.out.println(">>> Creacion exitosa <<<");
-                                break;
-                            case 3:
+                                    categorias.add(CategoriaService.crear(categorias));
+                                    System.out.println(">>> Creacion exitosa <<<");
+                                    break;
+                                case 3:
 //                                HU-CAT-03 – Editar categoría
-                                CategoriaService.actualizar(categorias);
-                                break;
-                            case 4:
+                                    CategoriaService.actualizar(categorias);
+                                    break;
+                                case 4:
 //                                HU-CAT-04 – Eliminar categoría (baja lógica)
-
-                                break;
-                        }
+                                    CategoriaService.eliminar(categorias);
+                                    break;
+                                default:
+                                    seguirSubmenu = false;
+                            }
+                        } while (seguirSubmenu);
                         break;
                     case 2:
 //                        Épica 2 – Gestión de Productos
-                        switch (opcion) {
-                            case 1:
+                        do {
+                            switch (BaseService.submenu("productos")) {
+                                case 1:
 //                                HU-PROD-01 – Listar productos
 
-                                break;
-                            case 2:
+                                    break;
+                                case 2:
 //                                HU-PROD-02 – Crear producto
 
-                                break;
-                            case 3:
+                                    break;
+                                case 3:
 //                                HU-PROD-03 – Editar producto
 
-                                break;
-                            case 4:
+                                    break;
+                                case 4:
 //                                HU-PROD-04 – Eliminar producto (baja lógica)
 
-                                break;
-                        }
+                                    break;
+                                default:
+                                    seguirSubmenu = false;
+                            }
+                        } while (seguirSubmenu);
                         break;
                     case 3:
 //                        Épica 3 – Gestión de Usuarios
-                        switch (opcion) {
-                            case 1:
+                        do {
+                            switch (BaseService.submenu("usuarios")) {
+                                case 1:
 //                                HU-USR-01 – Listar usuarios
 
-                                break;
-                            case 2:
+                                    break;
+                                case 2:
 //                                HU-USR-02 – Crear usuario
 
-                                break;
-                            case 3:
+                                    break;
+                                case 3:
 //                                HU-USR-03 – Editar usuario
 
-                                break;
-                            case 4:
+                                    break;
+                                case 4:
 //                                HU-USR-04 – Eliminar usuario (baja lógica)
 
-                                break;
-                        }
+                                    break;
+                                default:
+                                    seguirSubmenu = false;
+                            }
+                        } while (seguirSubmenu);
+
                         break;
                     case 4:
 //                        Épica 4 – Gestión de Pedidos y Detalles
-                        switch (opcion) {
-                            case 1:
+                        do {
+                            switch (BaseService.submenu("pedidos y detalles")) {
+                                case 1:
 //                                HU-PED-01 – Listar pedidos
 
-                                break;
-                            case 2:
+                                    break;
+                                case 2:
 //                                HU-PED-02 – Crear pedido con detalles
 
-                                break;
-                            case 3:
+                                    break;
+                                case 3:
 //                                HU-PED-03 – Actualizar estado/forma de pago del pedido
 
-                                break;
-                            case 4:
+                                    break;
+                                case 4:
 //                                HU-PED-04 – Eliminar pedido (baja lógica)
 
-                                break;
-                        }
+                                    break;
+                                default:
+                                    seguirSubmenu = false;
+                            }
+                        } while (seguirSubmenu);
                         break;
                     default:
                         System.out.println(">>> Fin del programa <<<");

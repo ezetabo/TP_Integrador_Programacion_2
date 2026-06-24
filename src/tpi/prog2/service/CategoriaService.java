@@ -23,26 +23,26 @@ public class CategoriaService {
                         2. Actualizar Descripcion.
                         3. Volver al menu principal.
                         """;
-        Categoria c = lista.get(obtnerIndex(lista));
+        Categoria c = lista.get(obtnerIndex(lista, "actualizar"));
         do {
             int opcion = InputReader.leerIntEnRango(menu, "ERROR.. El dato debe ser numerico", 1, 3);
             switch (opcion) {
                 case 1:
-                    System.out.println("["+c.getNombre()+"]");
+                    System.out.println("[" + c.getNombre() + "]");
                     String nombre = pedirNombreUnico(lista);
                     c.setNombre(nombre);
                     System.out.println("---Actualizacion exitosa---");
                     break;
                 case 2:
-                    System.out.println("["+c.getDescripcion()+"]");
+                    System.out.println("[" + c.getDescripcion() + "]");
                     String descripcion = InputReader.leerCadena("Ingrese la descripcion de \"" + c.getNombre() + "\" :");
                     c.setDescripcion(descripcion);
                     System.out.println("---Actualizacion exitosa---");
                     break;
                 default:
                     volver = false;
-            }    
-        } while (volver);       
+            }
+        } while (volver);
     }
 
     private static boolean existeNombre(List<Categoria> lista, String nombre) {
@@ -67,13 +67,34 @@ public class CategoriaService {
         return nombre;
     }
 
-    public static int obtnerIndex(List<Categoria> lista) {
+    public static int obtnerIndex(List<Categoria> lista, String accion) {
         int largo = lista.size();
         for (int i = 0; i < largo; i++) {
-            System.out.println((i + 1) + lista.get(i).info());
+            Categoria c = lista.get(i);
+            if (!c.isEliminado()) {
+                System.out.println((i + 1) + c.info());
+            }
         }
-        return InputReader.leerIntEnRango("Seleccione el numero de categoria que quiere actualizar: ",
+        return InputReader.leerIntEnRango("Seleccione el numero de categoria que quiere" + accion + ": ",
                 "ERROR... El dato debe ser numerico", 1, largo) - 1;
+    }
+
+    public static void eliminar(List<Categoria> lista) {
+        int index = obtnerIndex(lista, "eliminar");
+        Categoria c = lista.get(index);
+        boolean tieneActivos = c.tieneProductosActivos();
+        System.out.println("[" + c.info() + "]");
+        if (!tieneActivos) {
+            int borrar = InputReader.leerIntEnRango("Seguro que desea eliminar esta categoria? \n1.SI\n2.NO",
+                    "ERROR.. El dato debe ser numerico.", 1, 2);
+            if (borrar == 1) {
+                c.setEliminado(true);
+                System.out.println("---Eliminacion exitosa---");
+            }
+        }else{
+            System.out.println(">>> No se puede eliminar ya que tiene productos activos asociados <<<");
+        }
+
     }
 
 }

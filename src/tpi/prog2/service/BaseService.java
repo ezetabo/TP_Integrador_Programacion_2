@@ -22,24 +22,6 @@ public class BaseService {
         }
     }
 
-    public static Base buscarPorId(List<? extends Base> lista, long id) {
-        for (Base elemento : lista) {
-            if (!elemento.isEliminado()) {
-                return elemento;
-            }
-        }
-        return null;
-    }
-
-    public static boolean eliminarLogico(List<? extends Base> lista, long id) {
-        Base elemento = buscarPorId(lista, id);
-        if (elemento != null) {
-            elemento.eliminar();
-            return true;
-        }
-        return false;
-    }
-
     public static int submenu(String tipo) {
         String menu = String.format("""
                     
@@ -47,10 +29,11 @@ public class BaseService {
                     1. Listar
                     2. Crear
                     3. Editar
-                    4. Eliminar                   
+                    4. Eliminar
+                    0. Volver al menu principal.
                     Seleccione: """, tipo.toUpperCase());
 
-        return InputReader.leerIntEnRango(menu, "Ingrese un número válido.", 1, 4);
+        return InputReader.leerIntEnRango(menu, "Ingrese un número válido.", 0, 4);
     }
 
     public static int menu() {
