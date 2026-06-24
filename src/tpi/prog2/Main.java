@@ -9,6 +9,7 @@ import tpi.prog2.entities.Usuario;
 import tpi.prog2.menu.InputReader;
 import tpi.prog2.service.BaseService;
 import tpi.prog2.service.CategoriaService;
+import tpi.prog2.service.ProductoService;
 
 public class Main {
 
@@ -37,8 +38,7 @@ public class Main {
                                     break;
                                 case 2:
 //                                HU-CAT-02 – Crear categoría
-                                    categorias.add(CategoriaService.crear(categorias));
-                                    System.out.println(">>> Creacion exitosa <<<");
+                                    CategoriaService.crear(categorias);                                    
                                     break;
                                 case 3:
 //                                HU-CAT-03 – Editar categoría
@@ -63,7 +63,7 @@ public class Main {
                                     break;
                                 case 2:
 //                                HU-PROD-02 – Crear producto
-
+                                    ProductoService.crear(productos, categorias);                                    
                                     break;
                                 case 3:
 //                                HU-PROD-03 – Editar producto

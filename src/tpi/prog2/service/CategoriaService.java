@@ -6,10 +6,11 @@ import tpi.prog2.menu.InputReader;
 
 public class CategoriaService {
 
-    public static Categoria crear(List<Categoria> lista) {
+    public static void crear(List<Categoria> lista) {
         String nombre = pedirNombreUnico(lista);
         String descripcion = InputReader.leerCadena("Ingrese la descripcion de \"" + nombre + "\" :");
-        return crear(nombre, descripcion);
+        lista.add(crear(nombre, descripcion));
+        System.out.println(">>> Creacion exitosa <<<");
     }
 
     public static Categoria crear(String nombre, String descripcion) {
@@ -75,7 +76,7 @@ public class CategoriaService {
                 System.out.println((i + 1) + c.info());
             }
         }
-        return InputReader.leerIntEnRango("Seleccione el numero de categoria que quiere" + accion + ": ",
+        return InputReader.leerIntEnRango("Seleccione el numero de categoria que quiere " + accion + ": ",
                 "ERROR... El dato debe ser numerico", 1, largo) - 1;
     }
 

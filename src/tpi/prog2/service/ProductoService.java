@@ -7,15 +7,19 @@ import tpi.prog2.menu.InputReader;
 
 public class ProductoService {
 
-    public static Producto crear(List<Producto> lista) {
+    public static void crear(List<Producto> lista, List<Categoria>categorias) {
         String nombre = pedirNombreUnico(lista);
-        Double precio = InputReader.leerDoubleEnRango("Ingrese el precio de \n" + nombre + "\n: ", "Error!! El precio debe ser numerido",
+        double precio = InputReader.leerDoubleEnRango("Ingrese el precio de \"" + nombre + "\": ", "Error!! El precio debe ser numerido",
                 0, Double.MAX_VALUE);
-        String descripcion = InputReader.leerCadena("Ingrese la descripcion de \n" + nombre + "\n: ");
-        int stock = InputReader.leerIntEnRango("Ingrese el precio de \n" + nombre + "\n: ", "Error!! El precio debe ser numerido",
+        String descripcion = InputReader.leerCadena("Ingrese la descripcion de \"" + nombre + "\": ");
+        int stock = InputReader.leerIntEnRango("Ingrese el stock de \"" + nombre + "\": ", "Error!! El stock debe ser numerido",
                 0, Integer.MAX_VALUE);
         String imagen = InputReader.leerCadena("Ingrese el nombre de la imagen: ");
-        return crear(nombre, precio, descripcion, stock, imagen);
+        int index = CategoriaService.obtnerIndex(categorias, "asignar");
+        Producto p = crear(nombre, precio, descripcion, stock, imagen);
+        p.setCategoria(categorias.get(index));
+        lista.add(p);        
+        System.out.println(">>> Creacion exitosa <<<");
     }
 
     public static Producto crear(String nombre, Double precio, String descripcion, int stock, String imagen) {
