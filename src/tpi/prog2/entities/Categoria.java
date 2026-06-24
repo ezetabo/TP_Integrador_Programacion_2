@@ -110,7 +110,7 @@ public class Categoria extends Base {
         StringBuilder sb = new StringBuilder();
 
         sb.append(String.format(
-                "| ID: %-4s | Categoría: %-25s | Descripción: %-40s |%n",
+                "| ID: %-4s | Categoría: %-25s | Descripción: %-40s |\n",
                 id,
                 nombre,
                 descripcion
@@ -119,7 +119,7 @@ public class Categoria extends Base {
         sb.append("Productos:%n".formatted());
 
         if (productos.isEmpty()) {
-            sb.append("  Sin productos cargados.%n");
+            sb.append("  Sin productos cargados.\n");
         } else {
             for (Producto producto : productos) {
                 sb.append("  ")

@@ -44,4 +44,74 @@ public class UsuarioService {
         } while (existe);
         return mail;
     }
+
+    public static int obtnerIndex(List<Usuario> lista, String accion) {
+        int largo = lista.size();
+        for (int i = 0; i < largo; i++) {
+            Usuario u = lista.get(i);
+            if (!u.isEliminado()) {
+                System.out.println((i + 1) + u.info());
+            }
+        }
+        return InputReader.leerIntEnRango("Seleccione el numero de usuario que quiere " + accion + ": ",
+                "ERROR... El dato debe ser numerico", 1, largo) - 1;
+    }
+
+    public static void actualizar(List<Usuario> lista) {
+        boolean volver = true;
+        String menu = """
+                        1. Actualizar Nombre.
+                        2. Actualizar Apellido.
+                        3. Actualizar Mail.
+                        4. Actualizar Celular.
+                        5. Actualizar Contraseña.
+                        6. Actualizar Rol.
+                        0. Volver al menu de Usuarios.
+                        Seleccione: 
+                        """;
+        Usuario u = lista.get(obtnerIndex(lista, "actualizar"));
+        do {
+            int opcion = InputReader.leerIntEnRango(menu, "ERROR.. El dato debe ser numerico", 0, 6);
+            switch (opcion) {
+                case 1:
+                    System.out.println("[" + u.getNombre() + "]");
+                    String nombre = InputReader.leerCadena("Ingrese el nuevo nombre: ");
+                    u.setNombre(nombre);
+                    System.out.println("---Actualizacion exitosa---");
+                    break;
+                case 2:
+                    System.out.println("[" + u.getApellido() + "]");
+                    String apellido = InputReader.leerCadena("Ingrese el apellido: ");
+                    u.setApellido(apellido);
+                    System.out.println("---Actualizacion exitosa---");
+                    break;
+                case 3:
+                    System.out.println("[" + u.getMail() + "]");
+                    String mail = pedirMailUnico(lista);
+                    u.setMail(mail);
+                    System.out.println("---Actualizacion exitosa---");
+                    break;
+                case 4:
+                    System.out.println("[" + u.getCelular() + "]");
+                    String celular = InputReader.leerTelefono("Ingrese el numero de celular: ");
+
+                    System.out.println("---Actualizacion exitosa---");
+                    break;
+                case 5:
+                    System.out.println("[" + u.getContrasenia()+ "]");
+                    String contrasenia = InputReader.leerCadena("Ingrese la nueva contraseña: ");
+                    u.setContrasenia(contrasenia);
+                    System.out.println("---Actualizacion exitosa---");
+                    break;
+                case 6:
+                    System.out.println("[" + u.getRol() + "]");
+                    Rol rol = InputReader.leerRol();
+                    u.setRol(rol);
+                    System.out.println("---Actualizacion exitosa---");
+                    break;
+                default:
+                    volver = false;
+            }
+        } while (volver);
+    }
 }

@@ -150,9 +150,8 @@ public class Usuario extends Base {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-
         sb.append(String.format(
-                "| ID: %-4s | Usuario: %-12s %-12s | Mail: %-15s | Celular: %-15s | Rol: %-8s |%n",
+                "| ID: %-4s | Usuario: %-12s %-12s | Mail: %-15s | Celular: %-15s | Rol: %-8s |\n",
                 id,
                 nombre,
                 apellido,
@@ -160,11 +159,9 @@ public class Usuario extends Base {
                 celular,
                 rol
         ));
-
         sb.append("Pedidos:%n".formatted());
-
         if (pedidos.isEmpty()) {
-            sb.append("  Sin pedidos cargados.%n");
+            sb.append("  Sin pedidos cargados.\n");
         } else {
             for (Pedido pedido : pedidos) {
                 sb.append("  ")
@@ -172,7 +169,19 @@ public class Usuario extends Base {
                         .append(System.lineSeparator());
             }
         }
+        return sb.toString();
+    }
 
+    public String info() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format(
+                "| Usuario: %-12s %-12s | Mail: %-15s | Celular: %-15s | Rol: %-8s |",
+                nombre,
+                apellido,
+                mail,
+                celular,
+                rol
+        ));
         return sb.toString();
     }
 

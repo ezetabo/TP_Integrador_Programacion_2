@@ -23,6 +23,7 @@ public class CategoriaService {
                         1. Actualizar Nombre.
                         2. Actualizar Descripcion.
                         0. Volver al menu de categorias.
+                        Seleccione: 
                         """;
         Categoria c = lista.get(obtnerIndex(lista, "actualizar"));
         do {

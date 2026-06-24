@@ -93,7 +93,7 @@ public class Main {
                                     break;
                                 case 3:
 //                                HU-USR-03 – Editar usuario
-
+                                    UsuarioService.actualizar(usuarios);
                                     break;
                                 case 4:
 //                                HU-USR-04 – Eliminar usuario (baja lógica)

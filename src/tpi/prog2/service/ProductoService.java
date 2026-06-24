@@ -68,6 +68,7 @@ public class ProductoService {
                         2. Actualizar Stock.
                         3. Actualizar Categoria.
                         0. Volver al menu de productos.
+                        Seleccione: 
                         """;
         Producto p = lista.get(obtnerIndex(lista, "actualizar"));
         do {
