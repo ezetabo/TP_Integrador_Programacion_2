@@ -86,16 +86,17 @@ public class CategoriaService {
         boolean tieneActivos = c.tieneProductosActivos();
         System.out.println("[" + c.info() + "]");
         if (!tieneActivos) {
-            int borrar = InputReader.leerIntEnRango("Seguro que desea eliminar esta categoria? \n1.SI\n2.NO",
+            int borrar = InputReader.leerIntEnRango("Seguro que desea eliminar esta categoria? \n1.SI\n2.NO\nSeleccione: ",
                     "ERROR.. El dato debe ser numerico.", 1, 2);
             if (borrar == 1) {
                 c.setEliminado(true);
                 System.out.println("---Eliminacion exitosa---");
+            }else{
+                System.out.println("---Eliminacion cancelada---");
             }
         }else{
             System.out.println(">>> No se puede eliminar ya que tiene productos activos asociados <<<");
         }
-
     }
 
 }

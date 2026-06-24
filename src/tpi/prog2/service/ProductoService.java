@@ -98,4 +98,20 @@ public class ProductoService {
             }
         } while (volver);
     }
+
+    public static void eliminar(List<Producto> lista) {
+        int index = obtnerIndex(lista, "eliminar");
+        Producto p = lista.get(index);
+        System.out.println("[" + p.info() + "]");
+
+        int borrar = InputReader.leerIntEnRango("Seguro que desea eliminar este producto? \n1.SI\n2.NO\nSeleccione: ",
+                "ERROR.. El dato debe ser numerico.", 1, 2);
+        if (borrar == 1) {
+            p.setEliminado(true);
+            System.out.println("---Eliminacion exitosa---");
+        } else {
+            System.out.println("---Eliminacion cancelada---");
+        }
+
+    }
 }

@@ -71,7 +71,7 @@ public class Main {
                                     break;
                                 case 4:
 //                                HU-PROD-04 – Eliminar producto (baja lógica)
-
+                                    ProductoService.eliminar(productos);
                                     break;
                                 default:
                                     seguirSubmenu = false;
