@@ -84,7 +84,7 @@ public class Main {
                             switch (BaseService.submenu("usuarios")) {
                                 case 1:
 //                                HU-USR-01 – Listar usuarios
-
+                                    BaseService.listar(usuarios);
                                     break;
                                 case 2:
 //                                HU-USR-02 – Crear usuario

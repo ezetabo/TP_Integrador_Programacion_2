@@ -161,7 +161,7 @@ public class Pedido extends Base implements Calculable {
         StringBuilder sb = new StringBuilder();
 
         sb.append(String.format(
-                "| ID: %-4s | Fecha: %-10s | Usuario: %-25s | Estado: %-12s | Pago: %-14s | Total: $%10.2f |%n",
+                "| ID: %-4s | Fecha: %-10s | Usuario: %-15s | Estado: %-12s | Pago: %-14s | Total: $%10.2f |%n",
                 id,
                 fecha,
                 usuario.getNombre(),

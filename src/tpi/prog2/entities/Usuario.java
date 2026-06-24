@@ -152,7 +152,7 @@ public class Usuario extends Base {
         StringBuilder sb = new StringBuilder();
 
         sb.append(String.format(
-                "| ID: %-4s | Usuario: %-20s %-20s | Mail: %-30s | Celular: %-15s | Rol: %-8s |%n",
+                "| ID: %-4s | Usuario: %-12s %-12s | Mail: %-15s | Celular: %-15s | Rol: %-8s |%n",
                 id,
                 nombre,
                 apellido,
