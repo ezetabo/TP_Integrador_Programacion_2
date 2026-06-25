@@ -5,7 +5,7 @@ import java.util.List;
 import tpi.prog2.entities.Usuario;
 import tpi.prog2.enums.Rol;
 import tpi.prog2.exception.ServiceException;
-import tpi.prog2.menu.InputReader;
+import tpi.prog2.utils.InputReader;
 
 public class UsuarioService {
 

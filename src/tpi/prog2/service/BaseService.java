@@ -11,7 +11,7 @@ import tpi.prog2.enums.Estado;
 import tpi.prog2.enums.FormaPago;
 import tpi.prog2.enums.Rol;
 import tpi.prog2.exception.ServiceException;
-import tpi.prog2.menu.InputReader;
+import tpi.prog2.utils.InputReader;
 
 public class BaseService {
 

@@ -6,7 +6,7 @@ import tpi.prog2.entities.Categoria;
 import tpi.prog2.entities.Pedido;
 import tpi.prog2.entities.Producto;
 import tpi.prog2.entities.Usuario;
-import tpi.prog2.menu.InputReader;
+import tpi.prog2.utils.InputReader;
 import tpi.prog2.service.BaseService;
 import tpi.prog2.service.CategoriaService;
 import tpi.prog2.service.PedidoService;

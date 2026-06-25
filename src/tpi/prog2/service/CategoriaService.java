@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import tpi.prog2.entities.Categoria;
 import tpi.prog2.exception.ServiceException;
-import tpi.prog2.menu.InputReader;
+import tpi.prog2.utils.InputReader;
 
 public class CategoriaService {
 

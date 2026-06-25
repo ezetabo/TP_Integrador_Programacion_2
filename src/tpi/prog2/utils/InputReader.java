@@ -1,4 +1,4 @@
-package tpi.prog2.menu;
+package tpi.prog2.utils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
