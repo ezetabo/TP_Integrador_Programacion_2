@@ -1,6 +1,5 @@
 package tpi.prog2.entities;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
