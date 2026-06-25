@@ -25,20 +25,18 @@ public class CategoriaService {
                         0. Volver al menu de categorias.
                         Seleccione: 
                         """;
-        Categoria c = lista.get(obtnerIndex(lista, "actualizar"));
+        Categoria c = obtnerUno(lista, "actualizar");
         do {
             int opcion = InputReader.leerIntEnRango(menu, "ERROR.. El dato debe ser numerico", 0, 2);
             switch (opcion) {
                 case 1:
-                    System.out.println("[" + c.getNombre() + "]");
-                    String nombre = pedirNombreUnico(lista);
-                    c.setNombre(nombre);
+                    System.out.println("ACTUAL: [" + c.getNombre() + "]");
+                    c.setNombre(pedirNombreUnico(lista));
                     System.out.println("---Actualizacion exitosa---");
                     break;
                 case 2:
-                    System.out.println("[" + c.getDescripcion() + "]");
-                    String descripcion = InputReader.leerCadena("Ingrese la descripcion de \"" + c.getNombre() + "\" :");
-                    c.setDescripcion(descripcion);
+                    System.out.println("ACTUAL: [" + c.getDescripcion() + "]");
+                    c.setDescripcion(InputReader.leerCadena("Ingrese la descripcion de \"" + c.getNombre() + "\" :"));
                     System.out.println("---Actualizacion exitosa---");
                     break;
                 default:
@@ -69,7 +67,7 @@ public class CategoriaService {
         return nombre;
     }
 
-    public static int obtnerIndex(List<Categoria> lista, String accion) {
+    public static Categoria obtnerUno(List<Categoria> lista, String accion) {
         int largo = lista.size();
         for (int i = 0; i < largo; i++) {
             Categoria c = lista.get(i);
@@ -77,13 +75,13 @@ public class CategoriaService {
                 System.out.println((i + 1) + c.info());
             }
         }
-        return InputReader.leerIntEnRango("Seleccione el numero de categoria que quiere " + accion + ": ",
+        int index = InputReader.leerIntEnRango("Seleccione el numero de categoria que quiere " + accion + ": ",
                 "ERROR... El dato debe ser numerico", 1, largo) - 1;
+        return lista.get(index);
     }
 
     public static void eliminar(List<Categoria> lista) {
-        int index = obtnerIndex(lista, "eliminar");
-        Categoria c = lista.get(index);
+        Categoria c = obtnerUno(lista, "eliminar");
         boolean tieneActivos = c.tieneProductosActivos();
         System.out.println("[" + c.info() + "]");
         if (!tieneActivos) {

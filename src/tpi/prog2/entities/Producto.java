@@ -111,7 +111,7 @@ public class Producto extends Base {
 
     @Override
     public String toString() {
-        return String.format("| ID: %-4s %s", id, info());
+        return String.format("| ID: %-4s %s\n", id, info());
     }
 
     public String info() { 

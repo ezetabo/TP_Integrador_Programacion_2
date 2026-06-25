@@ -30,11 +30,10 @@ public class PedidoService {
         pedido.setFormaPago(InputReader.leerFormaPago());
         System.out.println("El estado actual del pedido es \"PENDIENTE\"");
         if (InputReader.confirmar("Desea cambiarlo? (S.si - N.no): ")) {
-            Estado estado = InputReader.leerEstado();
-            pedido.setEstado(estado);
+            pedido.setEstado(InputReader.leerEstado());
         }
         lista.add(pedido);
-        System.out.println("Pedido creado exitosamente con ID: "+ pedido.getId()  + " y Estado: "+ pedido.getEstado().getDescripcion() );
+        System.out.println("Pedido creado exitosamente con ID: " + pedido.getId() + " y Estado: " + pedido.getEstado().getDescripcion());
     }
 
     public static void listarConListado(List<Pedido> lista) {
@@ -48,5 +47,60 @@ public class PedidoService {
     public static void listarPorUsuario(List<Usuario> usuarios) {
         Usuario u = UsuarioService.obtnerUno(usuarios, "consultar");
         System.out.println(u.infoConListado());
+    }
+
+    public static Pedido obtnerUno(List<Pedido> lista, String accion) {
+        int largo = lista.size();
+        for (int i = 0; i < largo; i++) {
+            Pedido p = lista.get(i);
+            if (!p.isEliminado()) {
+                System.out.println((i + 1) + p.info());
+            }
+        }
+        int index = InputReader.leerIntEnRango("Seleccione el numero de pedido que quiere " + accion + ": ",
+                "ERROR... El dato debe ser numerico", 1, largo) - 1;
+        return lista.get(index);
+    }
+
+    public static void actualizar(List<Pedido> lista) {
+        boolean volver = true;
+        String menu = """
+                        1. Actualizar Estado.
+                        2. Actualizar Forma de Pago.                       
+                        0. Volver al menu de pedidos.
+                        Seleccione: 
+                        """;
+        Pedido p = obtnerUno(lista, "actualizar");
+        do {
+            int opcion = InputReader.leerIntEnRango(menu, "ERROR.. El dato debe ser numerico", 0, 2);
+            switch (opcion) {
+                case 1:
+                    System.out.println("ACTUAL: [" + p.getEstado().getDescripcion() + "]");
+                    p.setEstado(InputReader.leerEstado());
+                    System.out.println("---Actualizacion exitosa---");
+                    break;
+                case 2:
+                    System.out.println("ACTUAL: [" + p.getFormaPago().getDescripcion() + "]");
+                    p.setFormaPago(InputReader.leerFormaPago());
+                    System.out.println("---Actualizacion exitosa---");
+                    break;
+                default:
+                    volver = false;
+            }
+        } while (volver);
+    }
+    
+        public static void eliminar(List<Pedido> lista) {
+        Pedido p = obtnerUno(lista, "eliminar");
+        System.out.println("[" + p.info() + "]");
+
+        int borrar = InputReader.leerIntEnRango("Seguro que desea eliminar este pedido? \n1.SI\n2.NO\nSeleccione: ",
+                "ERROR.. El dato debe ser numerico.", 1, 2);
+        if (borrar == 1) {
+            p.setEliminado(true);
+            System.out.println("---Eliminacion exitosa---");
+        } else {
+            System.out.println("---Eliminacion cancelada---");
+        }
     }
 }

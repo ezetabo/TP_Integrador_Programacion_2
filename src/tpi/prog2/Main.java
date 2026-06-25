@@ -49,7 +49,7 @@ public class Main {
                                                 CategoriaService.listarConListado(categorias);
                                         }
                                     } else {
-                                        System.out.println("No hay categorias activas");
+                                        System.out.println(" ***No hay categorias activas***");
                                     }
 
                                     break;
@@ -62,7 +62,7 @@ public class Main {
                                     if (BaseService.tieneActivos(categorias)) {
                                         CategoriaService.actualizar(categorias);
                                     } else {
-                                        System.out.println("No hay categorias activas");
+                                        System.out.println(" ***No hay categorias activas***");
                                     }
                                     break;
                                 case 4:
@@ -71,7 +71,7 @@ public class Main {
                                         CategoriaService.eliminar(categorias);
                                         ;
                                     } else {
-                                        System.out.println("No hay categorias activas");
+                                        System.out.println(" ***No hay categorias activas***");
                                     }
                                     break;
                                 default:
@@ -88,7 +88,7 @@ public class Main {
                                     if (BaseService.tieneActivos(productos)) {
                                         BaseService.listar(productos);
                                     } else {
-                                        System.out.println("No hay productos activos");
+                                        System.out.println(" ***No hay productos activos***");
                                     }
                                     break;
                                 case 2:
@@ -97,7 +97,7 @@ public class Main {
                                         ProductoService.crear(productos, categorias);
                                     } else {
                                         System.out.println(
-                                                "Debe existir al menos una categoria antes de crear un producto");
+                                                "*** Debe existir al menos una categoria antes de crear un producto***");
                                     }
                                     break;
                                 case 3:
@@ -105,7 +105,7 @@ public class Main {
                                     if (BaseService.tieneActivos(productos)) {
                                         ProductoService.actualizar(productos, categorias);
                                     } else {
-                                        System.out.println("No hay productos activos");
+                                        System.out.println(" ***No hay productos activos***");
                                     }
                                     break;
                                 case 4:
@@ -113,7 +113,7 @@ public class Main {
                                     if (BaseService.tieneActivos(productos)) {
                                         ProductoService.eliminar(productos);
                                     } else {
-                                        System.out.println("No hay productos activos");
+                                        System.out.println(" ***No hay productos activos***");
                                     }
                                     break;
                                 default:
@@ -140,7 +140,7 @@ public class Main {
                                                 UsuarioService.listarConListado(usuarios);
                                         }
                                     } else {
-                                        System.out.println("No hay usuarios activos");
+                                        System.out.println(" ***No hay usuarios activos***");
                                     }
 
                                     break;
@@ -153,7 +153,7 @@ public class Main {
                                     if (BaseService.tieneActivos(usuarios)) {
                                         UsuarioService.actualizar(usuarios);
                                     } else {
-                                        System.out.println("No hay usuarios activos");
+                                        System.out.println(" ***No hay usuarios activos***");
                                     }
                                     break;
                                 case 4:
@@ -161,7 +161,7 @@ public class Main {
                                     if (BaseService.tieneActivos(usuarios)) {
                                         UsuarioService.eliminar(usuarios);
                                     } else {
-                                        System.out.println("No hay usuarios activos");
+                                        System.out.println(" ***No hay usuarios activos***");
                                     }
                                     break;
                                 default:
@@ -179,7 +179,7 @@ public class Main {
                                     if (BaseService.tieneActivos(pedidos)) {
 
                                     } else {
-                                        System.out.println("No hay pedidos activos");
+                                        System.out.println(" ***No hay pedidos activos***");
                                     }
                                     switch (InputReader.leerIntEnRango("""
                                             1. Listar solo pedidos.
@@ -200,29 +200,27 @@ public class Main {
                                 case 2:
                                     // HU-PED-02 – Crear pedido con detalles
                                     if (BaseService.tieneActivos(usuarios)
-                                            && ProductoService.existeDisponible(productos)) {
-//                                        do {
-                                            PedidoService.crear(pedidos, usuarios, productos);
-//                                       
+                                            && ProductoService.existeDisponible(productos)) {//   
+                                        PedidoService.crear(pedidos, usuarios, productos);//                                       
                                     } else {
                                         System.out.println(
-                                                "Debe existir al menos un usuario y un producto con stock mayor a 0 antes de crear un pedido");
+                                                " ***Debe existir al menos un usuario y un producto con stock mayor a 0 antes de crear un pedido***");
                                     }
                                     break;
                                 case 3:
                                     // HU-PED-03 – Actualizar estado/forma de pago del pedido
                                     if (BaseService.tieneActivos(pedidos)) {
-
+                                        PedidoService.actualizar(pedidos);
                                     } else {
-                                        System.out.println("No hay pedidos activos");
+                                        System.out.println(" ***No hay pedidos activos***");
                                     }
                                     break;
                                 case 4:
                                     // HU-PED-04 – Eliminar pedido (baja lógica)
                                     if (BaseService.tieneActivos(pedidos)) {
-
+                                        PedidoService.eliminar(pedidos);
                                     } else {
-                                        System.out.println("No hay pedidos activos");
+                                        System.out.println(" ***No hay pedidos activos***");
                                     }
                                     break;
                                 default:

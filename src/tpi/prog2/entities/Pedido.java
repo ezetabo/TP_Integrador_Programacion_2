@@ -169,9 +169,11 @@ public class Pedido extends Base implements Calculable {
             sb.append("  Sin detalles cargados.\n");
         } else {
             for (DetallePedido detalle : detalles) {
-                sb.append("  ")
-                        .append(detalle)
-                        .append(System.lineSeparator());
+                if (!detalle.isEliminado()) {
+                    sb.append("  ")
+                            .append(detalle)
+                            .append(System.lineSeparator());
+                }
             }
         }
         return sb.toString();

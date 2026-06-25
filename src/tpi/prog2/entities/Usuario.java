@@ -160,8 +160,9 @@ public class Usuario extends Base {
             sb.append("  Sin pedidos cargados.\n");
         } else {
             for (Pedido pedido : pedidos) {
-                sb.append("  ")
-                        .append(pedido);
+                if(!pedido.isEliminado()){
+                    sb.append("  ").append(pedido);
+                }                
             }
         }
         return sb.toString();

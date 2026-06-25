@@ -113,16 +113,16 @@ public class Categoria extends Base {
             sb.append("  Sin productos cargados.\n");
         } else {
             for (Producto producto : productos) {
-                sb.append("  ")
-                        .append(producto)
-                        .append(System.lineSeparator());
+                if (!producto.isEliminado()) {
+                    sb.append("  ").append(producto);
+                }
             }
         }
         return sb.toString();
     }
 
     @Override
-    public String toString() { 
+    public String toString() {
         return String.format("| ID: %-4s %s\n", id, info());
     }
 
