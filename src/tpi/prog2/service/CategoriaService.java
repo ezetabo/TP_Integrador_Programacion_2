@@ -1,5 +1,6 @@
 package tpi.prog2.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import tpi.prog2.entities.Categoria;
 import tpi.prog2.menu.InputReader;
@@ -68,16 +69,16 @@ public class CategoriaService {
     }
 
     public static Categoria obtnerUno(List<Categoria> lista, String accion) {
-        int largo = lista.size();
-        for (int i = 0; i < largo; i++) {
-            Categoria c = lista.get(i);
+        List<Categoria> activos = new ArrayList<>();
+        for (Categoria c : lista) {
             if (!c.isEliminado()) {
-                System.out.println((i + 1) + c.info());
+                activos.add(c);
+                System.out.println(activos.size() + c.info());
             }
         }
         int index = InputReader.leerIntEnRango("Seleccione el numero de categoria que quiere " + accion + ": ",
-                "ERROR... El dato debe ser numerico", 1, largo) - 1;
-        return lista.get(index);
+                "ERROR... El dato debe ser numerico", 1, activos.size()) - 1;
+        return activos.get(index);
     }
 
     public static void eliminar(List<Categoria> lista) {

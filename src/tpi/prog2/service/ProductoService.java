@@ -1,5 +1,6 @@
 package tpi.prog2.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import tpi.prog2.entities.Categoria;
 import tpi.prog2.entities.Producto;
@@ -14,7 +15,7 @@ public class ProductoService {
         String descripcion = InputReader.leerCadena("Ingrese la descripcion de \"" + nombre + "\": ");
         int stock = InputReader.leerIntEnRango("Ingrese el stock de \"" + nombre + "\": ", "Error!! El stock debe ser numerido",
                 0, Integer.MAX_VALUE);
-        String imagen = InputReader.leerCadena("Ingrese el nombre de la imagen: ");       
+        String imagen = InputReader.leerCadena("Ingrese el nombre de la imagen: ");
         Producto p = crear(nombre, precio, descripcion, stock, imagen);
         p.setCategoria(CategoriaService.obtnerUno(categorias, "asignar"));
         lista.add(p);
@@ -48,29 +49,29 @@ public class ProductoService {
     }
 
     public static Producto obtnerUno(List<Producto> lista, String accion) {
-        int largo = lista.size();
-        for (int i = 0; i < largo; i++) {
-            Producto u = lista.get(i);
-            if (!u.isEliminado() && u.getStock() > 0) {
-                System.out.println((i + 1) + u.info());
+        List<Producto> activos = new ArrayList<>();
+        for (Producto p : lista) {
+            if (!p.isEliminado() && p.getStock() > 0) {
+                activos.add(p);
+                System.out.println(activos.size() + p.info());
             }
         }
         int index = InputReader.leerIntEnRango("Seleccione el numero de producto que quiere " + accion + ": ",
-                "ERROR... El dato debe ser numerico", 1, largo) - 1;
-        return lista.get(index);
+                "ERROR... El dato debe ser numerico", 1, activos.size()) - 1;
+        return activos.get(index);
     }
-    
-        public static Producto obtnerUnoActivo(List<Producto> lista, String accion) {
-        int largo = lista.size();
-        for (int i = 0; i < largo; i++) {
-            Producto u = lista.get(i);
-            if (!u.isEliminado()) {
-                System.out.println((i + 1) + u.info());
+
+    public static Producto obtnerUnoActivo(List<Producto> lista, String accion) {
+        List<Producto> activos = new ArrayList<>();
+        for (Producto p : lista) {
+            if (!p.isEliminado()) {
+                activos.add(p);
+                System.out.println(activos.size() + p.info());
             }
         }
         int index = InputReader.leerIntEnRango("Seleccione el numero de producto que quiere " + accion + ": ",
-                "ERROR... El dato debe ser numerico", 1, largo) - 1;
-        return lista.get(index);
+                "ERROR... El dato debe ser numerico", 1, activos.size()) - 1;
+        return activos.get(index);
     }
 
     public static void actualizar(List<Producto> lista, List<Categoria> categorias) {
@@ -82,7 +83,7 @@ public class ProductoService {
                         0. Volver al menu de productos.
                         Seleccione: 
                         """;
-        Producto p = obtnerUno(lista, "actualizar");
+        Producto p = obtnerUnoActivo(lista, "actualizar");
         do {
             int opcion = InputReader.leerIntEnRango(menu, "ERROR.. El dato debe ser numerico", 0, 3);
             switch (opcion) {

@@ -71,8 +71,8 @@ public class Producto extends Base {
         if (stock < 0) {
             throw new IllegalArgumentException("ERROR!! El stock del producto debe ser mayor o igual a 0.");
         }
-        calcularDisponible();
         this.stock = stock;
+        calcularDisponible();
     }
 
     public String getImagen() {

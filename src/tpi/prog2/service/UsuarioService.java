@@ -1,5 +1,6 @@
 package tpi.prog2.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import tpi.prog2.entities.Usuario;
 import tpi.prog2.enums.Rol;
@@ -23,9 +24,9 @@ public class UsuarioService {
         return new Usuario(nombre, apellido, mail, celular, contrasenia, rol);
     }
 
-    private static boolean existeMail(List<Usuario> lista, String nombre) {
+    private static boolean existeMail(List<Usuario> lista, String mail) {
         for (Usuario usuario : lista) {
-            if (usuario.getNombre().equalsIgnoreCase(nombre.trim())) {
+            if (usuario.getMail().equalsIgnoreCase(mail.trim())) {
                 return true;
             }
         }
@@ -45,17 +46,17 @@ public class UsuarioService {
         return mail;
     }
 
-    public static Usuario obtnerUno(List<Usuario> lista, String accion) {
-        int largo = lista.size();
-        for (int i = 0; i < largo; i++) {
-            Usuario u = lista.get(i);
-            if (!u.isEliminado()) {
-                System.out.println((i + 1) + u.info());
+    public static Usuario obtenerUno(List<Usuario> lista, String accion) {
+        List<Usuario> activos = new ArrayList<>();
+        for (Usuario usuario : lista) {
+            if (!usuario.isEliminado()) {
+                activos.add(usuario);
+                System.out.println(activos.size() + ". " + usuario.info());
             }
         }
-        int index = InputReader.leerIntEnRango("Seleccione el numero de usuario que quiere " + accion + ": ",
-                "ERROR... El dato debe ser numerico", 1, largo) - 1;
-        return lista.get(index);
+        int index = InputReader.leerIntEnRango("Seleccione el usuario que quiere " + accion + ": ",
+                "ERROR... El dato debe ser numérico.", 1, activos.size()) - 1;
+        return activos.get(index);
     }
 
     public static void actualizar(List<Usuario> lista) {
@@ -70,7 +71,7 @@ public class UsuarioService {
                         0. Volver al menu de Usuarios.
                         Seleccione: 
                         """;
-        Usuario u = obtnerUno(lista, "actualizar");
+        Usuario u = obtenerUno(lista, "actualizar");
         do {
             int opcion = InputReader.leerIntEnRango(menu, "ERROR.. El dato debe ser numerico", 0, 6);
             switch (opcion) {
@@ -110,8 +111,8 @@ public class UsuarioService {
         } while (volver);
     }
 
-    public static void eliminar(List<Usuario> lista) {        
-        Usuario u = obtnerUno(lista, "eliminar");
+    public static void eliminar(List<Usuario> lista) {
+        Usuario u = obtenerUno(lista, "eliminar");
         System.out.println("[" + u.info() + "]");
         int borrar = InputReader.leerIntEnRango("Seguro que desea eliminar este usuario? \n1.SI\n2.NO\nSeleccione: ",
                 "ERROR.. El dato debe ser numerico.", 1, 2);

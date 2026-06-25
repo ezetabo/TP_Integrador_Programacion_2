@@ -1,6 +1,7 @@
 package tpi.prog2.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import tpi.prog2.entities.Pedido;
 import tpi.prog2.entities.Producto;
@@ -16,24 +17,28 @@ public class PedidoService {
     }
 
     public static void crear(List<Pedido> lista, List<Usuario> usuarios, List<Producto> productos) {
-        Usuario u = UsuarioService.obtnerUno(usuarios, "realizar un pedido");
-        Pedido pedido = crear(LocalDate.now(), Estado.PENDIENTE, FormaPago.EFECTIVO);
-        pedido.setUsuario(u);
-        do {
-            Producto prod = ProductoService.obtnerUno(productos, "comprar");
-            int cantidad = InputReader.leerIntEnRango(String.format("Cuantas unidades de %s quiere?(max: %d): ",
-                    prod.getNombre(), prod.getStock()), "ERROR.. El tipo de dato debe ser numerico", 1, prod.getStock());
-            prod.setStock(prod.getStock() - cantidad);
-            pedido.addDetallePedido(cantidad, prod.getPrecio(), prod);
-        } while (ProductoService.existeDisponible(productos)
-                && InputReader.confirmar("Desea seguir comprando? (S.si - N.no): "));
-        pedido.setFormaPago(InputReader.leerFormaPago());
-        System.out.println("El estado actual del pedido es \"PENDIENTE\"");
-        if (InputReader.confirmar("Desea cambiarlo? (S.si - N.no): ")) {
-            pedido.setEstado(InputReader.leerEstado());
+        try {
+            Usuario u = UsuarioService.obtenerUno(usuarios, "realizar un pedido");
+            Pedido pedido = crear(LocalDate.now(), Estado.PENDIENTE, FormaPago.EFECTIVO);
+            do {
+                Producto prod = ProductoService.obtnerUno(productos, "comprar");
+                int cantidad = InputReader.leerIntEnRango(String.format("Cuantas unidades de %s quiere?(max: %d): ",
+                        prod.getNombre(), prod.getStock()), "ERROR.. El tipo de dato debe ser numerico", 1, prod.getStock());
+                pedido.addDetallePedido(cantidad, prod.getPrecio(), prod);
+                prod.setStock(prod.getStock() - cantidad);
+            } while (ProductoService.existeDisponible(productos)
+                    && InputReader.confirmar("Desea seguir comprando? (S.si - N.no): "));
+            pedido.setFormaPago(InputReader.leerFormaPago());
+            System.out.println("El estado actual del pedido es \"PENDIENTE\"");
+            if (InputReader.confirmar("Desea cambiarlo? (S.si - N.no): ")) {
+                pedido.setEstado(InputReader.leerEstado());
+            }
+            pedido.setUsuario(u);
+            lista.add(pedido);
+            System.out.println("Pedido creado exitosamente con ID: " + pedido.getId() + " y Estado: " + pedido.getEstado().getDescripcion());
+        } catch (Exception e) {
+            InputReader.mostrarError(e);
         }
-        lista.add(pedido);
-        System.out.println("Pedido creado exitosamente con ID: " + pedido.getId() + " y Estado: " + pedido.getEstado().getDescripcion());
     }
 
     public static void listarConListado(List<Pedido> lista) {
@@ -45,21 +50,21 @@ public class PedidoService {
     }
 
     public static void listarPorUsuario(List<Usuario> usuarios) {
-        Usuario u = UsuarioService.obtnerUno(usuarios, "consultar");
+        Usuario u = UsuarioService.obtenerUno(usuarios, "consultar");
         System.out.println(u.infoConListado());
     }
 
     public static Pedido obtnerUno(List<Pedido> lista, String accion) {
-        int largo = lista.size();
-        for (int i = 0; i < largo; i++) {
-            Pedido p = lista.get(i);
+        List<Pedido> activos = new ArrayList<>();
+        for (Pedido p : lista) {
             if (!p.isEliminado()) {
-                System.out.println((i + 1) + p.info());
+                activos.add(p);
+                System.out.println(activos.size() + p.info());
             }
         }
         int index = InputReader.leerIntEnRango("Seleccione el numero de pedido que quiere " + accion + ": ",
-                "ERROR... El dato debe ser numerico", 1, largo) - 1;
-        return lista.get(index);
+                "ERROR... El dato debe ser numerico", 1, activos.size()) - 1;
+        return activos.get(index);
     }
 
     public static void actualizar(List<Pedido> lista) {
@@ -89,8 +94,8 @@ public class PedidoService {
             }
         } while (volver);
     }
-    
-        public static void eliminar(List<Pedido> lista) {
+
+    public static void eliminar(List<Pedido> lista) {
         Pedido p = obtnerUno(lista, "eliminar");
         System.out.println("[" + p.info() + "]");
 

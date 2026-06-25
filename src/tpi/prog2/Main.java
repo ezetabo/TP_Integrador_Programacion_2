@@ -177,24 +177,23 @@ public class Main {
                                 case 1:
                                     // HU-PED-01 – Listar pedidos
                                     if (BaseService.tieneActivos(pedidos)) {
-
-                                    } else {
-                                        System.out.println(" ***No hay pedidos activos***");
-                                    }
-                                    switch (InputReader.leerIntEnRango("""
+                                        switch (InputReader.leerIntEnRango("""
                                             1. Listar solo pedidos.
                                             2. Listar pedidos y sus detalles.
                                             3. Listar pedidos por usuario.
                                             Seleccione:
                                             """, "ERROR.. El dato debe ser numerico", 1, 3)) {
-                                        case 1:
-                                            BaseService.listar(pedidos);
-                                            break;
-                                        case 2:
-                                            PedidoService.listarConListado(pedidos);
-                                            break;
-                                        default:
-                                            PedidoService.listarPorUsuario(usuarios);
+                                            case 1:
+                                                BaseService.listar(pedidos);
+                                                break;
+                                            case 2:
+                                                PedidoService.listarConListado(pedidos);
+                                                break;
+                                            default:
+                                                PedidoService.listarPorUsuario(usuarios);
+                                        }
+                                    } else {
+                                        System.out.println(" ***No hay pedidos activos***");
                                     }
                                     break;
                                 case 2:
