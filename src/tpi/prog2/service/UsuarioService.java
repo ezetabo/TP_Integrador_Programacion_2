@@ -30,6 +30,9 @@ public class UsuarioService {
         return new Usuario(nombre, apellido, mail, celular, contrasenia, rol);
     }
 
+    public static Usuario crearAdmin(){
+        return crear("Admin", "Admin", "admin@mail.com", "1122334455", "admin123", Rol.ADMIN);
+    }
     public static boolean existeMail(List<Usuario> lista, String mail) {
         for (Usuario usuario : lista) {
             if (usuario.getMail().equalsIgnoreCase(mail.trim())) {

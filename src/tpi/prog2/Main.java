@@ -22,8 +22,10 @@ public class Main {
         List<Producto> productos = new ArrayList<>();
         List<Usuario> usuarios = new ArrayList<>();
         List<Pedido> pedidos = new ArrayList<>();
-
+        usuarios.add(UsuarioService.crearAdmin());
+        
         BaseService.cargarDatosIniciales(categorias, productos, usuarios, pedidos);
+        
         try {
             if (BaseService.login(usuarios)) {
                 do {

@@ -79,8 +79,7 @@ public class BaseService {
 
             Usuario usuarioAdmin = UsuarioService.crear("Ezequiel", "Taboada", "ezequiel@foodstore.com", "1122334455", "admin123", Rol.ADMIN);
             Usuario usuarioCliente = UsuarioService.crear("Lucía", "Gómez", "lucia@foodstore.com", "1166778899", "cliente123", Rol.USUARIO);
-            Usuario usuarioAdmin2 = UsuarioService.crear("Admin", "Admin", "admin@mail.com", "1122334455", "admin123", Rol.ADMIN);
-
+           
             Pedido pedido1 = PedidoService.crear(LocalDate.of(2026, 6, 20), Estado.TERMINADO, FormaPago.TARJETA);
             Pedido pedido2 = PedidoService.crear(LocalDate.of(2026, 6, 22), Estado.PENDIENTE, FormaPago.TRANSFERENCIA);
             Pedido pedido3 = PedidoService.crear(LocalDate.of(2026, 6, 22), Estado.CONFIRMADO, FormaPago.EFECTIVO);
@@ -112,8 +111,7 @@ public class BaseService {
             pedidos.add(pedido3);
 
             usuarios.add(usuarioAdmin);
-            usuarios.add(usuarioCliente);
-            usuarios.add(usuarioAdmin2);
+            usuarios.add(usuarioCliente);            
 
             productos.add(agua);
             productos.add(gaseosa);
