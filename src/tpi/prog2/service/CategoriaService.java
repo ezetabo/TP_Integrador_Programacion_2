@@ -3,15 +3,20 @@ package tpi.prog2.service;
 import java.util.ArrayList;
 import java.util.List;
 import tpi.prog2.entities.Categoria;
+import tpi.prog2.exception.ServiceException;
 import tpi.prog2.menu.InputReader;
 
 public class CategoriaService {
 
     public static void crear(List<Categoria> lista) {
-        String nombre = pedirNombreUnico(lista);
-        String descripcion = InputReader.leerCadena("Ingrese la descripcion de \"" + nombre + "\" :");
-        lista.add(crear(nombre, descripcion));
-        System.out.println(">>> Creacion exitosa <<<");
+        try {
+            String nombre = pedirNombreUnico(lista);
+            String descripcion = InputReader.leerCadena("Ingrese la descripcion de \"" + nombre + "\" :");
+            lista.add(crear(nombre, descripcion));
+            System.out.println(">>> Creacion exitosa <<<");
+        } catch (Exception e) {
+            throw new ServiceException("Error al intentar crear una categoria: " + e.getMessage());
+        }
     }
 
     public static Categoria crear(String nombre, String descripcion) {
@@ -19,31 +24,35 @@ public class CategoriaService {
     }
 
     public static void actualizar(List<Categoria> lista) {
-        boolean volver = true;
-        String menu = """
+        try {
+            boolean volver = true;
+            String menu = """
                         1. Actualizar Nombre.
                         2. Actualizar Descripcion.
                         0. Volver al menu de categorias.
                         Seleccione: 
                         """;
-        Categoria c = obtnerUno(lista, "actualizar");
-        do {
-            int opcion = InputReader.leerIntEnRango(menu, "ERROR.. El dato debe ser numerico", 0, 2);
-            switch (opcion) {
-                case 1:
-                    System.out.println("ACTUAL: [" + c.getNombre() + "]");
-                    c.setNombre(pedirNombreUnico(lista));
-                    System.out.println("---Actualizacion exitosa---");
-                    break;
-                case 2:
-                    System.out.println("ACTUAL: [" + c.getDescripcion() + "]");
-                    c.setDescripcion(InputReader.leerCadena("Ingrese la descripcion de \"" + c.getNombre() + "\" :"));
-                    System.out.println("---Actualizacion exitosa---");
-                    break;
-                default:
-                    volver = false;
-            }
-        } while (volver);
+            Categoria c = obtnerUno(lista, "actualizar");
+            do {
+                int opcion = InputReader.leerIntEnRango(menu, "ERROR.. El dato debe ser numerico", 0, 2);
+                switch (opcion) {
+                    case 1:
+                        System.out.println("ACTUAL: [" + c.getNombre() + "]");
+                        c.setNombre(pedirNombreUnico(lista));
+                        System.out.println("---Actualizacion exitosa---");
+                        break;
+                    case 2:
+                        System.out.println("ACTUAL: [" + c.getDescripcion() + "]");
+                        c.setDescripcion(InputReader.leerCadena("Ingrese la descripcion de \"" + c.getNombre() + "\" :"));
+                        System.out.println("---Actualizacion exitosa---");
+                        break;
+                    default:
+                        volver = false;
+                }
+            } while (volver);
+        } catch (Exception e) {
+            throw new ServiceException("Error al intentar actualizar la categoria: " + e.getMessage());
+        }
     }
 
     private static boolean existeNombre(List<Categoria> lista, String nombre) {

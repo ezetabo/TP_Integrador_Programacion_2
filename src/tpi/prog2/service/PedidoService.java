@@ -8,6 +8,7 @@ import tpi.prog2.entities.Producto;
 import tpi.prog2.entities.Usuario;
 import tpi.prog2.enums.Estado;
 import tpi.prog2.enums.FormaPago;
+import tpi.prog2.exception.ServiceException;
 import tpi.prog2.menu.InputReader;
 
 public class PedidoService {
@@ -37,7 +38,7 @@ public class PedidoService {
             lista.add(pedido);
             System.out.println("Pedido creado exitosamente con ID: " + pedido.getId() + " y Estado: " + pedido.getEstado().getDescripcion());
         } catch (Exception e) {
-            InputReader.mostrarError(e);
+            throw new ServiceException("Error al intentar crear el pedido: " + e.getMessage());
         }
     }
 
@@ -68,31 +69,36 @@ public class PedidoService {
     }
 
     public static void actualizar(List<Pedido> lista) {
-        boolean volver = true;
-        String menu = """
+        try {
+            boolean volver = true;
+            String menu = """
                         1. Actualizar Estado.
                         2. Actualizar Forma de Pago.                       
                         0. Volver al menu de pedidos.
                         Seleccione: 
                         """;
-        Pedido p = obtnerUno(lista, "actualizar");
-        do {
-            int opcion = InputReader.leerIntEnRango(menu, "ERROR.. El dato debe ser numerico", 0, 2);
-            switch (opcion) {
-                case 1:
-                    System.out.println("ACTUAL: [" + p.getEstado().getDescripcion() + "]");
-                    p.setEstado(InputReader.leerEstado());
-                    System.out.println("---Actualizacion exitosa---");
-                    break;
-                case 2:
-                    System.out.println("ACTUAL: [" + p.getFormaPago().getDescripcion() + "]");
-                    p.setFormaPago(InputReader.leerFormaPago());
-                    System.out.println("---Actualizacion exitosa---");
-                    break;
-                default:
-                    volver = false;
-            }
-        } while (volver);
+            Pedido p = obtnerUno(lista, "actualizar");
+            do {
+                int opcion = InputReader.leerIntEnRango(menu, "ERROR.. El dato debe ser numerico", 0, 2);
+                switch (opcion) {
+                    case 1:
+                        System.out.println("ACTUAL: [" + p.getEstado().getDescripcion() + "]");
+                        p.setEstado(InputReader.leerEstado());
+                        System.out.println("---Actualizacion exitosa---");
+                        break;
+                    case 2:
+                        System.out.println("ACTUAL: [" + p.getFormaPago().getDescripcion() + "]");
+                        p.setFormaPago(InputReader.leerFormaPago());
+                        System.out.println("---Actualizacion exitosa---");
+                        break;
+                    default:
+                        volver = false;
+                }
+            } while (volver);
+        } catch (Exception e) {
+            throw new ServiceException("Error al intentar actualizar el pedido: " + e.getMessage());
+        }
+
     }
 
     public static void eliminar(List<Pedido> lista) {

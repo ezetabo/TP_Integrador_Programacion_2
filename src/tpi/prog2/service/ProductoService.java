@@ -4,22 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 import tpi.prog2.entities.Categoria;
 import tpi.prog2.entities.Producto;
+import tpi.prog2.exception.ServiceException;
 import tpi.prog2.menu.InputReader;
 
 public class ProductoService {
 
     public static void crear(List<Producto> lista, List<Categoria> categorias) {
-        String nombre = pedirNombreUnico(lista);
-        double precio = InputReader.leerDoubleEnRango("Ingrese el precio de \"" + nombre + "\": ", "Error!! El precio debe ser numerido",
-                0, Double.MAX_VALUE);
-        String descripcion = InputReader.leerCadena("Ingrese la descripcion de \"" + nombre + "\": ");
-        int stock = InputReader.leerIntEnRango("Ingrese el stock de \"" + nombre + "\": ", "Error!! El stock debe ser numerido",
-                0, Integer.MAX_VALUE);
-        String imagen = InputReader.leerCadena("Ingrese el nombre de la imagen: ");
-        Producto p = crear(nombre, precio, descripcion, stock, imagen);
-        p.setCategoria(CategoriaService.obtnerUno(categorias, "asignar"));
-        lista.add(p);
-        System.out.println(">>> Creacion exitosa <<<");
+        try {
+            String nombre = pedirNombreUnico(lista);
+            double precio = InputReader.leerDoubleEnRango("Ingrese el precio de \"" + nombre + "\": ", "Error!! El precio debe ser numerido",
+                    0, Double.MAX_VALUE);
+            String descripcion = InputReader.leerCadena("Ingrese la descripcion de \"" + nombre + "\": ");
+            int stock = InputReader.leerIntEnRango("Ingrese el stock de \"" + nombre + "\": ", "Error!! El stock debe ser numerido",
+                    0, Integer.MAX_VALUE);
+            String imagen = InputReader.leerCadena("Ingrese el nombre de la imagen: ");
+            Producto p = crear(nombre, precio, descripcion, stock, imagen);
+            p.setCategoria(CategoriaService.obtnerUno(categorias, "asignar"));
+            lista.add(p);
+            System.out.println(">>> Creacion exitosa <<<");
+        } catch (Exception e) {
+            throw new ServiceException("Error al intentar crear un producto: " + e.getMessage());
+        }
+
     }
 
     public static Producto crear(String nombre, Double precio, String descripcion, int stock, String imagen) {
@@ -75,39 +81,44 @@ public class ProductoService {
     }
 
     public static void actualizar(List<Producto> lista, List<Categoria> categorias) {
-        boolean volver = true;
-        String menu = """
+        try {
+            boolean volver = true;
+            String menu = """
                         1. Actualizar Precio.
                         2. Actualizar Stock.
                         3. Actualizar Categoria.
                         0. Volver al menu de productos.
                         Seleccione: 
                         """;
-        Producto p = obtnerUnoActivo(lista, "actualizar");
-        do {
-            int opcion = InputReader.leerIntEnRango(menu, "ERROR.. El dato debe ser numerico", 0, 3);
-            switch (opcion) {
-                case 1:
-                    System.out.println("ACTUAL: [" + p.getPrecio() + "]");
-                    p.setPrecio(InputReader.leerDoubleEnRango("Ingrese el nuevo precio de \"" + p.getNombre()
-                            + "\": ", "Error!! El precio debe ser numerido", 0, Double.MAX_VALUE));
-                    System.out.println("---Actualizacion exitosa---");
-                    break;
-                case 2:
-                    System.out.println("ACTUAL: [" + p.getStock() + "]");
-                    p.setStock(InputReader.leerIntEnRango("Ingrese el nuevo stock de \"" + p.getNombre() + "\": ",
-                            "Error!! El stock debe ser numerido", 0, Integer.MAX_VALUE));
-                    System.out.println("---Actualizacion exitosa---");
-                    break;
-                case 3:
-                    System.out.println("ACTUAL: [" + p.getCategoria().getNombre() + "]");
-                    p.setCategoria(CategoriaService.obtnerUno(categorias, "asignar"));
-                    System.out.println("---Actualizacion exitosa---");
-                    break;
-                default:
-                    volver = false;
-            }
-        } while (volver);
+            Producto p = obtnerUnoActivo(lista, "actualizar");
+            do {
+                int opcion = InputReader.leerIntEnRango(menu, "ERROR.. El dato debe ser numerico", 0, 3);
+                switch (opcion) {
+                    case 1:
+                        System.out.println("ACTUAL: [" + p.getPrecio() + "]");
+                        p.setPrecio(InputReader.leerDoubleEnRango("Ingrese el nuevo precio de \"" + p.getNombre()
+                                + "\": ", "Error!! El precio debe ser numerido", 0, Double.MAX_VALUE));
+                        System.out.println("---Actualizacion exitosa---");
+                        break;
+                    case 2:
+                        System.out.println("ACTUAL: [" + p.getStock() + "]");
+                        p.setStock(InputReader.leerIntEnRango("Ingrese el nuevo stock de \"" + p.getNombre() + "\": ",
+                                "Error!! El stock debe ser numerido", 0, Integer.MAX_VALUE));
+                        System.out.println("---Actualizacion exitosa---");
+                        break;
+                    case 3:
+                        System.out.println("ACTUAL: [" + p.getCategoria().getNombre() + "]");
+                        p.setCategoria(CategoriaService.obtnerUno(categorias, "asignar"));
+                        System.out.println("---Actualizacion exitosa---");
+                        break;
+                    default:
+                        volver = false;
+                }
+            } while (volver);
+        } catch (Exception e) {
+            throw new ServiceException("Error al intentar actualizar el producto: " + e.getMessage());
+        }
+
     }
 
     public static void eliminar(List<Producto> lista) {
